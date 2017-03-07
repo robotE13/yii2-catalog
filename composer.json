@@ -1,0 +1,21 @@
+{
+    "name": "robote13/yii2-catalog",
+    "description": "Catalog of products for online store. Prices, sets, leftovers in the warehouse. In the module, the 'Class Table Inheritance' design pattern is used to represent the different categories of products.",
+    "type": "yii2-extension",
+    "keywords": ["yii2","catalog","shop"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Evgenii Dudal",
+            "email": "wolfstrace@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "^2.0.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "robote13\\catalog\\": ""
+        }
+    }
+}
