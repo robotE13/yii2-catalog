@@ -10,8 +10,8 @@ use Yii;
  * @property int $set_id
  * @property int $product_id
  *
- * @property CatalogProduct $product
- * @property CatalogSet $set
+ * @property Product $product
+ * @property Set $set
  */
 class SetProduct extends \yii\db\ActiveRecord
 {
@@ -52,7 +52,7 @@ class SetProduct extends \yii\db\ActiveRecord
      */
     public function getProduct()
     {
-        return $this->hasOne(CatalogProduct::className(), ['id' => 'product_id']);
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 
     /**
@@ -60,6 +60,6 @@ class SetProduct extends \yii\db\ActiveRecord
      */
     public function getSet()
     {
-        return $this->hasOne(CatalogSet::className(), ['id' => 'set_id']);
+        return $this->hasOne(Set::className(), ['id' => 'set_id']);
     }
 }

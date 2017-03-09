@@ -57,9 +57,10 @@ class m170308_102530_init extends Migration
             'title'=> $this->string()->notNull(),
             'description' => $this->text()->notNull()->defaultValue(''),
             'measurement_unit_id' => $this->integer()->notNull(),//'fk_product_measurement_unit_idx'
-            'price'=> $this->decimal(10,2)->notNull()
+            'price' => $this->decimal(10,2)->notNull(),
+            'status' => $this->integer()->notNull()
         ], $this->tableOptions);
-        $this->createIndex("product_slug_idx","{{%catalog_set}}",['slug_index'],true);
+        $this->createIndex("product_slug_idx","{{%catalog_product}}",['slug_index'],true);
         $this->createIndex('fk_product_type_idx', "{{%catalog_product}}", 'type_id');
         $this->addForeignKey('fk_product_type', "{{%catalog_product}}", 'type_id', "{{%product_type}}", 'id', 'RESTRICT', 'CASCADE');
         $this->createIndex('fk_product_measurement_unit_idx', "{{%catalog_product}}", 'measurement_unit_id');

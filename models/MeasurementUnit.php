@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property string $title
  *
- * @property CatalogProduct[] $catalogProducts
+ * @property Product[] $catalogProducts
  */
 class MeasurementUnit extends \yii\db\ActiveRecord
 {
@@ -49,6 +49,6 @@ class MeasurementUnit extends \yii\db\ActiveRecord
      */
     public function getCatalogProducts()
     {
-        return $this->hasMany(CatalogProduct::className(), ['measurement_unit_id' => 'id']);
+        return $this->hasMany(Product::className(), ['measurement_unit_id' => 'id']);
     }
 }

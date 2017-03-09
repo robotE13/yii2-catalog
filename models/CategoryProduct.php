@@ -10,8 +10,8 @@ use Yii;
  * @property int $category_id
  * @property int $product_id
  *
- * @property CatalogCategory $category
- * @property CatalogProduct $product
+ * @property Category $category
+ * @property Product $product
  */
 class CategoryProduct extends \yii\db\ActiveRecord
 {
@@ -30,9 +30,8 @@ class CategoryProduct extends \yii\db\ActiveRecord
     {
         return [
             [['category_id', 'product_id'], 'required'],
-            [['category_id', 'product_id'], 'integer'],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => CatalogCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => CatalogProduct::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
 
@@ -52,7 +51,7 @@ class CategoryProduct extends \yii\db\ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne(CatalogCategory::className(), ['id' => 'category_id']);
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
     /**
@@ -60,6 +59,6 @@ class CategoryProduct extends \yii\db\ActiveRecord
      */
     public function getProduct()
     {
-        return $this->hasOne(CatalogProduct::className(), ['id' => 'product_id']);
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 }

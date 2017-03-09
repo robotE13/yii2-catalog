@@ -12,7 +12,7 @@ use Yii;
  * @property string $description
  *
  * @property WarehouseProduct[] $warehouseProducts
- * @property CatalogProduct[] $products
+ * @property Product[] $products
  */
 class Warehouse extends \yii\db\ActiveRecord
 {
@@ -61,6 +61,6 @@ class Warehouse extends \yii\db\ActiveRecord
      */
     public function getProducts()
     {
-        return $this->hasMany(CatalogProduct::className(), ['id' => 'product_id'])->viaTable('{{%warehouse_product}}', ['warehouse_id' => 'id']);
+        return $this->hasMany(Product::className(), ['id' => 'product_id'])->via('warehouseProducts');
     }
 }

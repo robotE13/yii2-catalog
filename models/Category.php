@@ -16,7 +16,7 @@ use Yii;
  * @property int $depth
  *
  * @property CategoryProduct[] $categoryProducts
- * @property CatalogProduct[] $products
+ * @property Product[] $products
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -28,17 +28,28 @@ class Category extends \yii\db\ActiveRecord
         return '{{%catalog_category}}';
     }
 
+    public function behaviors()
+    {
+        return[
+            'tree'=>[
+                'class'=>'creocoder\nestedsets\NestedSetsBehavior'
+            ],
+            'indexed'=>[
+                'class'=> 'robote13\yii2components\behaviors\IndexedStringBehavior',
+                'attribute' => 'slug',
+                'indexAttribute' => 'slug_index'
+            ]
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['slug_index', 'slug', 'title', 'lft', 'rgt', 'depth'], 'required'],
-            [['lft', 'rgt', 'depth'], 'integer'],
-            [['slug_index'], 'string', 'max' => 32],
+            [['slug', 'title'], 'required'],
             [['slug', 'title'], 'string', 'max' => 255],
-            [['slug_index'], 'unique'],
         ];
     }
 
@@ -52,8 +63,8 @@ class Category extends \yii\db\ActiveRecord
             'slug_index' => Yii::t('robote13/catalog', 'Slug Index'),
             'slug' => Yii::t('robote13/catalog', 'Slug'),
             'title' => Yii::t('robote13/catalog', 'Title'),
-            'lft' => Yii::t('robote13/catalog', 'Lft'),
-            'rgt' => Yii::t('robote13/catalog', 'Rgt'),
+            //'lft' => Yii::t('robote13/catalog', 'Lft'),
+            //'rgt' => Yii::t('robote13/catalog', 'Rgt'),
             'depth' => Yii::t('robote13/catalog', 'Depth'),
         ];
     }
@@ -71,7 +82,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getProducts()
     {
-        return $this->hasMany(CatalogProduct::className(), ['id' => 'product_id'])->viaTable('{{%category_product}}', ['category_id' => 'id']);
+        return $this->hasMany(Product::className(), ['id' => 'product_id'])->via('categoryProducts');
     }
 
     /**

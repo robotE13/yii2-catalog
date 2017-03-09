@@ -15,18 +15,24 @@ use Yii;
  * @property string $description
  * @property int $measurement_unit_id
  * @property string $price
+ * @property int $status
+ * @property string $textStatus
  *
+ * @property array $statuses
  * @property MeasurementUnit $measurementUnit
  * @property ProductType $type
  * @property CategoryProduct[] $categoryProducts
- * @property CatalogCategory[] $categories
+ * @property Category[] $categories
  * @property SetProduct[] $setProducts
- * @property CatalogSet[] $sets
+ * @property Set[] $sets
  * @property WarehouseProduct[] $warehouseProducts
- * @property CatalogWarehouse[] $warehouses
+ * @property Warehouse[] $warehouses
  */
 class Product extends \yii\db\ActiveRecord
 {
+    const STATUS_DELETED = 2;
+    const STATUS_ACTIVE = 1;
+
     /**
      * @inheritdoc
      */
@@ -35,20 +41,46 @@ class Product extends \yii\db\ActiveRecord
         return '{{%catalog_product}}';
     }
 
+    public function behaviors()
+    {
+        return [
+            'indexed'=>[
+                'class'=> 'robote13\yii2components\behaviors\IndexedStringBehavior',
+                'attribute' => 'slug',
+                'indexAttribute' => 'slug_index'
+            ],
+            'textStatus'=>[
+                'class'=> \robote13\yii2components\behaviors\TextStatusBehavior::className(),
+                'attributes'=>[
+                    'status'=> static::$statuses
+                ]
+            ]
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['type_id', 'slug_index', 'slug', 'title', 'description', 'measurement_unit_id', 'price'], 'required'],
+            [['type_id', 'slug', 'title', 'description', 'measurement_unit_id', 'price'], 'required'],
             [['type_id', 'measurement_unit_id'], 'integer'],
             [['description'], 'string'],
             [['price'], 'number'],
-            [['slug_index'], 'string', 'max' => 32],
             [['slug', 'title'], 'string', 'max' => 255],
+            [['slug_index'], 'unique'],
+            ['status','in','range'=> static::$statuses],
             [['measurement_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => MeasurementUnit::className(), 'targetAttribute' => ['measurement_unit_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductType::className(), 'targetAttribute' => ['type_id' => 'id']],
+        ];
+    }
+
+    public static function getStatuses()
+    {
+        return[
+            self::STATUS_ACTIVE => Yii::t('robote13/catalog', 'Active'),
+            self::STATUS_DELETED => Yii::t('robote13/catalog', 'Deleted')
         ];
     }
 
@@ -66,6 +98,7 @@ class Product extends \yii\db\ActiveRecord
             'description' => Yii::t('robote13/catalog', 'Description'),
             'measurement_unit_id' => Yii::t('robote13/catalog', 'Measurement Unit ID'),
             'price' => Yii::t('robote13/catalog', 'Price'),
+            'textStatus' => Yii::t('robote13/catalog', 'Status'),
         ];
     }
 
@@ -98,7 +131,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getCategories()
     {
-        return $this->hasMany(CatalogCategory::className(), ['id' => 'category_id'])->viaTable('{{%category_product}}', ['product_id' => 'id']);
+        return $this->hasMany(Category::className(), ['id' => 'category_id'])->via('categoryProducts');
     }
 
     /**
@@ -114,7 +147,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getSets()
     {
-        return $this->hasMany(CatalogSet::className(), ['id' => 'set_id'])->viaTable('{{%set_product}}', ['product_id' => 'id']);
+        return $this->hasMany(Set::className(), ['id' => 'set_id'])->via('setProducts');
     }
 
     /**
@@ -130,7 +163,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getWarehouses()
     {
-        return $this->hasMany(CatalogWarehouse::className(), ['id' => 'warehouse_id'])->viaTable('{{%warehouse_product}}', ['product_id' => 'id']);
+        return $this->hasMany(Warehouse::className(), ['id' => 'warehouse_id'])->via('warehouseProducts');
     }
 
     /**

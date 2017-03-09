@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property string $title
  *
- * @property CatalogProduct[] $catalogProducts
+ * @property Product[] $catalogProducts
  * @property TypeCharacteristic[] $typeCharacteristics
  */
 class ProductType extends \yii\db\ActiveRecord
@@ -50,7 +50,7 @@ class ProductType extends \yii\db\ActiveRecord
      */
     public function getCatalogProducts()
     {
-        return $this->hasMany(CatalogProduct::className(), ['type_id' => 'id']);
+        return $this->hasMany(Product::className(), ['type_id' => 'id']);
     }
 
     /**

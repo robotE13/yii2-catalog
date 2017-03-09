@@ -36,9 +36,7 @@ class Set extends \yii\db\ActiveRecord
             [['slug_index', 'slug', 'title', 'description', 'discount_amount'], 'required'],
             [['description'], 'string'],
             [['discount_amount'], 'number'],
-            [['slug_index'], 'string', 'max' => 32],
             [['slug', 'title'], 'string', 'max' => 255],
-            [['slug_index'], 'unique'],
             [['slug_index'], 'unique'],
         ];
     }

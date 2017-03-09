@@ -11,8 +11,8 @@ use Yii;
  * @property int $product_id
  * @property int $left_in_stok
  *
- * @property CatalogProduct $product
- * @property CatalogWarehouse $warehouse
+ * @property Product $product
+ * @property Warehouse $warehouse
  */
 class WarehouseProduct extends \yii\db\ActiveRecord
 {
@@ -21,7 +21,7 @@ class WarehouseProduct extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'warehouse_product';
+        return '{{%warehouse_product}}';
     }
 
     /**
@@ -32,8 +32,8 @@ class WarehouseProduct extends \yii\db\ActiveRecord
         return [
             [['warehouse_id', 'product_id'], 'required'],
             [['warehouse_id', 'product_id', 'left_in_stok'], 'integer'],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => CatalogProduct::className(), 'targetAttribute' => ['product_id' => 'id']],
-            [['warehouse_id'], 'exist', 'skipOnError' => true, 'targetClass' => CatalogWarehouse::className(), 'targetAttribute' => ['warehouse_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['warehouse_id'], 'exist', 'skipOnError' => true, 'targetClass' => Warehouse::className(), 'targetAttribute' => ['warehouse_id' => 'id']],
         ];
     }
 
@@ -54,7 +54,7 @@ class WarehouseProduct extends \yii\db\ActiveRecord
      */
     public function getProduct()
     {
-        return $this->hasOne(CatalogProduct::className(), ['id' => 'product_id']);
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
 
     /**
@@ -62,7 +62,7 @@ class WarehouseProduct extends \yii\db\ActiveRecord
      */
     public function getWarehouse()
     {
-        return $this->hasOne(CatalogWarehouse::className(), ['id' => 'warehouse_id']);
+        return $this->hasOne(Warehouse::className(), ['id' => 'warehouse_id']);
     }
 
     /**
