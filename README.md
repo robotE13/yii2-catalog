@@ -26,7 +26,18 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
-Once the extension is installed, simply use it in your code by  :
-
 ```php
-<?= \robote13\catalog\AutoloadExample::widget(); ?>```
+'modules' => [
+    'backend'=>[
+        'modules'=>[
+            'shop-catalog' => [
+                'class' => 'robote13\catalog\Module',
+                'controllerNamespace' => 'robote13\catalog\frontend\controllers',
+            ],
+        ]
+    ],
+    'shop-catalog' => [
+        'class' => 'robote13\catalog\Module',//
+    ],
+],
+```
