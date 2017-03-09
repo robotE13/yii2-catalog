@@ -11,7 +11,9 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "^2.0.10"
+        "yiisoft/yii2": "^2.0.10",
+        "creocoder/yii2-nested-sets":"^0.9.0",
+        "robote13/yii2-components":"*"
     },
     "autoload": {
         "psr-4": {
