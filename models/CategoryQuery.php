@@ -2,6 +2,8 @@
 
 namespace robote13\catalog\models;
 
+use creocoder\nestedsets\NestedSetsQueryBehavior;
+
 /**
  * This is the ActiveQuery class for [[Category]].
  *
@@ -9,6 +11,11 @@ namespace robote13\catalog\models;
  */
 class CategoryQuery extends \yii\db\ActiveQuery
 {
+    public function behaviors() {
+        return [
+            'nestedSetsQuery' => NestedSetsQueryBehavior::className(),
+        ];
+    }
     /*public function active()
     {
         return $this->andWhere('[[status]]=1');

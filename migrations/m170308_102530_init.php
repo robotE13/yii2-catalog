@@ -12,6 +12,7 @@ class m170308_102530_init extends Migration
             'slug_index'=> $this->char(32)->notNull(),
             'slug'=> $this->string()->notNull(),
             'title'=> $this->string()->notNull(),
+            'tree' => $this->integer()->notNull(),
             'lft' => $this->integer()->notNull(),
             'rgt' => $this->integer()->notNull(),
             'depth' => $this->integer()->notNull()

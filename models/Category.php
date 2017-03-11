@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property string $slug_index
  * @property string $slug
+ * @property integer $tree Description
  * @property string $title
  * @property int $lft
  * @property int $rgt
@@ -32,7 +33,8 @@ class Category extends \yii\db\ActiveRecord
     {
         return[
             'tree'=>[
-                'class'=>'creocoder\nestedsets\NestedSetsBehavior'
+                'class'=>'creocoder\nestedsets\NestedSetsBehavior',
+                'treeAttribute'=>'tree'
             ],
             'indexed'=>[
                 'class'=> 'robote13\yii2components\behaviors\IndexedStringBehavior',
