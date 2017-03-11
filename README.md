@@ -32,7 +32,7 @@ Usage
         'modules'=>[
             'shop-catalog' => [
                 'class' => 'robote13\catalog\Module',
-                'controllerNamespace' => 'robote13\catalog\frontend\controllers',
+                'controllerNamespace' => 'robote13\catalog\backend\controllers',
             ],
         ]
     ],

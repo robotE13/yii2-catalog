@@ -1,6 +1,6 @@
 <?php
 
-namespace robote13\catalog\frontend\controllers;
+namespace robote13\catalog\backend\controllers;
 
 use yii\web\Controller;
 
