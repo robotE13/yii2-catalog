@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $title
+ * @property string $table
  *
  * @property Product[] $catalogProducts
  * @property TypeCharacteristic[] $typeCharacteristics
@@ -29,8 +30,9 @@ class ProductType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title'], 'required'],
+            [['title','table'], 'required'],
             [['title'], 'string', 'max' => 255],
+            ['table','match','pattern'=>'/^[a-z]{1}[a-z\_]{1,}[a-z]{1}$/']
         ];
     }
 
@@ -42,6 +44,7 @@ class ProductType extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('robote13/catalog', 'ID'),
             'title' => Yii::t('robote13/catalog', 'Title'),
+            'table' => Yii::t('robote13/catalog', 'Alias'),
         ];
     }
 

@@ -40,7 +40,8 @@ class m170308_102530_init extends Migration
         //Product types
         $this->createTable("{{%product_type}}", [
             'id'=> $this->primaryKey(),
-            'title'=> $this->string()->notNull()
+            'title'=> $this->string()->notNull(),
+            'table'=> $this->string()->notNull()
         ], $this->tableOptions);
 
         // Measurement units
@@ -72,7 +73,7 @@ class m170308_102530_init extends Migration
             'id' => $this->primaryKey(),
             'attribute' => $this->string()->notNull(),
             'label' => $this->string()->notNull(),
-            'values' => $this->text()->null(),
+            'data_type' => $this->integer()->notNull(),
             'type_id' => $this->integer()->notNull()
         ], $this->tableOptions);
         $this->createIndex('fk_characteristic_type_idx', "{{%type_characteristic}}", ['type_id','attribute'],true);

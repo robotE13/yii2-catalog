@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel robote13\catalog\forms\MeasurementUnitSearch */
+/* @var $searchModel robote13\catalog\forms\ProductTypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('robote13/catalog', 'Measurement units');
+$this->title = Yii::t('robote13/catalog', 'Product types');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="measurement-unit-index">
+<div class="product-type-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('robote13/catalog', 'Create Measurement Unit'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('robote13/catalog', 'Create Product Type'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'title',
+            'table',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

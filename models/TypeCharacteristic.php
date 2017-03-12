@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property string $attribute
  * @property string $label
- * @property string $values
+ * @property integer $data_type
  * @property int $type_id
  *
  * @property ProductType $type
@@ -31,9 +31,8 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['attribute', 'label', 'type_id'], 'required'],
-            [['values'], 'string'],
-            [['type_id'], 'integer'],
+            [['attribute', 'label', 'type_id','data_type'], 'required'],
+            [['type_id','data_type'], 'integer'],
             [['attribute', 'label'], 'string', 'max' => 255],
             [['type_id', 'attribute'], 'unique', 'targetAttribute' => ['type_id', 'attribute']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductType::className(), 'targetAttribute' => ['type_id' => 'id']],
@@ -49,7 +48,7 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
             'id' => Yii::t('robote13/catalog', 'ID'),
             'attribute' => Yii::t('robote13/catalog', 'Attribute'),
             'label' => Yii::t('robote13/catalog', 'Label'),
-            'values' => Yii::t('robote13/catalog', 'Values'),
+            'data_type' => Yii::t('robote13/catalog', 'Data type'),
             'type_id' => Yii::t('robote13/catalog', 'Type ID'),
         ];
     }
