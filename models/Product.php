@@ -14,11 +14,11 @@ use Yii;
  * @property string $title
  * @property string $description
  * @property int $measurement_unit_id
+ * @property char $origin_country
  * @property string $price
  * @property int $status
  * @property string $textStatus
  *
- * @property array $statuses
  * @property MeasurementUnit $measurementUnit
  * @property ProductType $type
  * @property CategoryProduct[] $categoryProducts
@@ -52,7 +52,7 @@ class Product extends \yii\db\ActiveRecord
             'textStatus'=>[
                 'class'=> \robote13\yii2components\behaviors\TextStatusBehavior::className(),
                 'attributes'=>[
-                    'status'=> static::$statuses
+                    'status'=> static::getStatuses()
                 ]
             ]
         ];
@@ -64,13 +64,13 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type_id', 'slug', 'title', 'description', 'measurement_unit_id', 'price'], 'required'],
+            [['type_id', 'slug', 'title', 'description', 'measurement_unit_id', 'price','origin_country'], 'required'],
             [['type_id', 'measurement_unit_id'], 'integer'],
             [['description'], 'string'],
             [['price'], 'number'],
             [['slug', 'title'], 'string', 'max' => 255],
             [['slug_index'], 'unique'],
-            ['status','in','range'=> static::$statuses],
+            ['status','in','range'=> static::getStatuses()],
             [['measurement_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => MeasurementUnit::className(), 'targetAttribute' => ['measurement_unit_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductType::className(), 'targetAttribute' => ['type_id' => 'id']],
         ];
@@ -97,6 +97,7 @@ class Product extends \yii\db\ActiveRecord
             'title' => Yii::t('robote13/catalog', 'Title'),
             'description' => Yii::t('robote13/catalog', 'Description'),
             'measurement_unit_id' => Yii::t('robote13/catalog', 'Measurement Unit ID'),
+            'origin_country' => Yii::t('robote13/catalog', 'Origin'),
             'price' => Yii::t('robote13/catalog', 'Price'),
             'textStatus' => Yii::t('robote13/catalog', 'Status'),
         ];
@@ -108,6 +109,11 @@ class Product extends \yii\db\ActiveRecord
     public function getMeasurementUnit()
     {
         return $this->hasOne(MeasurementUnit::className(), ['id' => 'measurement_unit_id']);
+    }
+
+    public function getDynamicAttributes()
+    {
+        return $this->hasOne(DynamicAttributes::className(),['product_id'=>'id']);
     }
 
     /**
