@@ -16,6 +16,8 @@ use Yii;
  */
 class ProductType extends \yii\db\ActiveRecord
 {
+    use \robote13\yii2components\traits\DropdownItemsTrait;
+    const CACHE_KEY_DROPDOWN = 'robote13_catalog_dropdown_items';
     /**
      * @inheritdoc
      */

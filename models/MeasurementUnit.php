@@ -14,6 +14,8 @@ use Yii;
  */
 class MeasurementUnit extends \yii\db\ActiveRecord
 {
+    use \robote13\yii2components\traits\DropdownItemsTrait;
+    const CACHE_KEY_DROPDOWN = 'robote13_catalog_m_unit_items';
     /**
      * @inheritdoc
      */
