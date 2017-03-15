@@ -19,7 +19,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'type_id', 'measurement_unit_id', 'status'], 'integer'],
-            [['slug_index', 'slug', 'title', 'description'], 'safe'],
+            [['slug', 'title', 'description'], 'safe'],
             [['price'], 'number'],
         ];
     }
@@ -67,9 +67,8 @@ class ProductSearch extends Product
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'slug_index', $this->slug_index])
+        $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;

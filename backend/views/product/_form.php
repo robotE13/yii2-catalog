@@ -26,6 +26,8 @@ use robote13\catalog\models\MeasurementUnit;
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'origin_country')->textInput(['maxlength' => true]) ?>
+    
     <?= $form->field($model, 'status')->dropDownList($model->getStatuses()) ?>
 
     <div class="form-group">
