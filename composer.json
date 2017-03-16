@@ -15,7 +15,7 @@
         "creocoder/yii2-nested-sets":"^0.9.0",
         "robote13/countries-list":"*",
         "robote13/yii2-components":"*",
-        "voskobovich/yii2-linker-behavior":"*"
+        "voskobovich/yii2-linker-behavior":"dev-master"
     },
     "autoload": {
         "psr-4": {
