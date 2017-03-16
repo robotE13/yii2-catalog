@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use robote13\catalog\models\Category;
 use robote13\catalog\models\ProductType;
 use robote13\catalog\models\MeasurementUnit;
 
@@ -16,6 +17,8 @@ use robote13\catalog\models\MeasurementUnit;
 
     <?= $form->field($model, 'type_id')->dropDownList(ProductType::dropdownItems('id','title')) ?>
 
+    <!-- //$form->field($model, 'categories')->dropDownList(Category::dropdownItems('id','title'),['multiple'=>true]) ?-->
+
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
@@ -27,7 +30,7 @@ use robote13\catalog\models\MeasurementUnit;
     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'origin_country')->textInput(['maxlength' => true]) ?>
-    
+
     <?= $form->field($model, 'status')->dropDownList($model->getStatuses()) ?>
 
     <div class="form-group">
