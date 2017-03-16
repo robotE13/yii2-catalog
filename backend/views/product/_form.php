@@ -17,11 +17,13 @@ use robote13\catalog\models\MeasurementUnit;
 
     <?= $form->field($model, 'type_id')->dropDownList(ProductType::dropdownItems('id','title')) ?>
 
-    <!-- //$form->field($model, 'categories')->dropDownList(Category::dropdownItems('id','title'),['multiple'=>true]) ?-->
+    <?= $form->field($model, 'categoriesIds')->dropDownList(Category::dropdownItems('id','title'),['multiple'=>true]) ?>
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'vendor_code')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 

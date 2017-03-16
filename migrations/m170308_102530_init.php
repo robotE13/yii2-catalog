@@ -57,6 +57,7 @@ class m170308_102530_init extends Migration
             'slug_index'=> $this->char(32)->notNull(),
             'slug'=> $this->string()->notNull(),
             'title'=> $this->string()->notNull(),
+            'vendor_code' => $this->string()->notNull(),
             'description' => $this->text()->notNull()->defaultValue(''),
             'measurement_unit_id' => $this->integer()->notNull(),//'fk_product_measurement_unit_idx'
             'origin_country' => $this->char(2)->notNull(),

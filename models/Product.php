@@ -5,6 +5,8 @@ namespace robote13\catalog\models;
 use Yii;
 use robote13\yii2components\behaviors\IndexedStringBehavior;
 use robote13\yii2components\behaviors\TextStatusBehavior;
+use voskobovich\linker\LinkerBehavior;
+use voskobovich\linker\updaters\ManyToManySmartUpdater;
 
 /**
  * This is the model class for table "{{%catalog_product}}".
@@ -14,6 +16,7 @@ use robote13\yii2components\behaviors\TextStatusBehavior;
  * @property string $slug_index
  * @property string $slug
  * @property string $title
+ * @property string $vendor_code
  * @property string $description
  * @property int $measurement_unit_id
  * @property char $origin_country
@@ -56,6 +59,17 @@ class Product extends \yii\db\ActiveRecord
                 'attributes'=>[
                     'status'=> static::getStatuses()
                 ]
+            ],
+            'relationalSave'=>[
+                'class' => LinkerBehavior::className(),
+                'relations' => [
+                    'categoriesIds'=>[
+                        'categories',
+                        'updater'=>[
+                            'class' => ManyToManySmartUpdater::className()
+                        ]
+                    ]
+                ]
             ]
         ];
     }
@@ -66,11 +80,11 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type_id','slug', 'title', 'description', 'measurement_unit_id', 'price','origin_country'], 'required'],
+            [['type_id','slug','vendor_code','categoriesIds', 'title', 'description', 'measurement_unit_id', 'price','origin_country'], 'required'],
             [['type_id', 'measurement_unit_id'], 'integer'],
             [['description'], 'string'],
             [['price'], 'number'],
-            [['slug', 'title'], 'string', 'max' => 255],
+            [['slug', 'title','vendor_code'], 'string', 'max' => 255],
             ['status','in','range'=> array_keys(static::getStatuses())],
             [['measurement_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => MeasurementUnit::className(), 'targetAttribute' => ['measurement_unit_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductType::className(), 'targetAttribute' => ['type_id' => 'id']],
@@ -93,9 +107,11 @@ class Product extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('robote13/catalog', 'ID'),
             'type_id' => Yii::t('robote13/catalog', 'Type ID'),
+            'categoriesIds' => Yii::t('robote13/catalog', 'Belongs to categories'),
             'slug_index' => Yii::t('robote13/catalog', 'Slug Index'),
             'slug' => Yii::t('robote13/catalog', 'Slug'),
             'title' => Yii::t('robote13/catalog', 'Title'),
+            'vendor_code' => Yii::t('robote13/catalog', 'Vendor Code'),
             'description' => Yii::t('robote13/catalog', 'Description'),
             'measurement_unit_id' => Yii::t('robote13/catalog', 'Measurement Unit ID'),
             'origin_country' => Yii::t('robote13/catalog', 'Origin'),
