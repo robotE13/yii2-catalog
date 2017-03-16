@@ -3,6 +3,8 @@
 namespace robote13\catalog\models;
 
 use Yii;
+use robote13\yii2components\behaviors\IndexedStringBehavior;
+use robote13\yii2components\behaviors\TextStatusBehavior;
 
 /**
  * This is the model class for table "{{%catalog_product}}".
@@ -45,12 +47,12 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'indexed'=>[
-                'class'=> 'robote13\yii2components\behaviors\IndexedStringBehavior',
+                'class'=> IndexedStringBehavior::className(),
                 'attribute' => 'slug',
                 'indexAttribute' => 'slug_index'
             ],
             'textStatus'=>[
-                'class'=> \robote13\yii2components\behaviors\TextStatusBehavior::className(),
+                'class'=> TextStatusBehavior::className(),
                 'attributes'=>[
                     'status'=> static::getStatuses()
                 ]
