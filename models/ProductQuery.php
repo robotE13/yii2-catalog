@@ -20,6 +20,11 @@ class ProductQuery extends \yii\db\ActiveQuery
         return $this->andWhere(['type_id'=>$type]);
     }
 
+    public function bySlug($slug)
+    {
+        return $this->andWhere(['slug_index'=> md5($slug)]);
+    }
+
     /**
      * @inheritdoc
      * @return Product[]|array

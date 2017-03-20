@@ -17,4 +17,18 @@ class MainController extends Controller
     {
         return $this->render('index');
     }
+
+    public function actionView($id)
+    {
+        return $this->render('view',['model'=> $this->findModel($id)]);
+    }
+
+    protected function findModel($id)
+    {
+        if(($model = \robote13\catalog\models\Product::find()->bySlug($id)->active()->one()))
+        {
+            return $model;
+        }
+        throw new \yii\web\NotFoundHttpException(\Yii::t('app', 'Requested page not found'));
+    }
 }
