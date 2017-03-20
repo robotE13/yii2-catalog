@@ -22,6 +22,7 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  * @property char $origin_country
  * @property string $price
  * @property int $status
+ * @property string $updated_in
  * @property string $textStatus
  *
  * @property MeasurementUnit $measurementUnit

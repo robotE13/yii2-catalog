@@ -17,6 +17,9 @@
         "robote13/yii2-components":"*",
         "voskobovich/yii2-linker-behavior":"dev-master"
     },
+    "require-dev":{
+        "yiisoft/yii2-faker": "~2.0.0"
+    },
     "autoload": {
         "psr-4": {
             "robote13\\catalog\\": ""

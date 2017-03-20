@@ -33,7 +33,8 @@ class m170308_102530_init extends Migration
             'slug'=> $this->string()->notNull(),
             'title'=> $this->string()->notNull(),
             'description' => $this->text()->notNull()->defaultValue(''),
-            'discount_amount' => $this->decimal(10,2)->notNull()
+            'discount_amount' => $this->decimal(10,2)->notNull(),
+            'updated_in'=> $this->timestamp()->notNull()->defaultExpression("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
         ], $this->tableOptions);
         $this->createIndex("set_slug_idx","{{%catalog_set}}",['slug_index'],true);
 
@@ -63,6 +64,7 @@ class m170308_102530_init extends Migration
             'origin_country' => $this->char(2)->notNull(),
             'price' => $this->decimal(10,2)->notNull(),
             'status' => $this->integer()->notNull(),
+            'updated_in'=> $this->timestamp()->notNull()->defaultExpression("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
         ], $this->tableOptions);
         $this->createIndex("product_slug_idx","{{%catalog_product}}",['slug_index'],true);
         $this->createIndex('fk_product_type_idx', "{{%catalog_product}}", 'type_id');
