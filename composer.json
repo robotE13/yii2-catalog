@@ -10,12 +10,19 @@
             "email": "wolfstrace@gmail.com"
         }
     ],
+    "repositories":[
+        {
+            "type":"vcs",
+            "url":"https://github.com/robotE13/yii2-fileapi-widget"
+        }
+    ],
     "require": {
         "yiisoft/yii2": "^2.0.10",
         "creocoder/yii2-nested-sets":"^0.9.0",
         "robote13/countries-list":"*",
         "robote13/yii2-components":"*",
-        "voskobovich/yii2-linker-behavior":"dev-master"
+        "voskobovich/yii2-linker-behavior":"dev-master",
+        "vova07/yii2-fileapi-widget": "dev-feature-flysystem"
     },
     "require-dev":{
         "yiisoft/yii2-faker": "~2.0.0"
