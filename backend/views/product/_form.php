@@ -26,17 +26,17 @@ use vova07\fileapi\Widget;
                     'accept'=>'image/*',
                     'elements'=>[
                         'preview' => [
-                            'width' => 130,
+                            'width' => 140,
                             'height' => 200
                         ],
                     ]
                 ],
                 'crop'=>true,
                 'jcropSettings'=>[
-                    'aspectRatio' => 0.65,
+                    'aspectRatio' => 0.7,
                     'bgColor' => '#ffffff',
                     'maxSize' => [500, 600],
-                    'minSize' => [260, 400],
+                    'minSize' => [280, 400],
                     'keySupport' => false, // Important param to hide jCrop radio button.
                     'selection' => '100%'
                 ]
