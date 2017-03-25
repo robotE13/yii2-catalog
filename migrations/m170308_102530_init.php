@@ -55,11 +55,12 @@ class m170308_102530_init extends Migration
         $this->createTable("{{%catalog_product}}", [
             'id'=> $this->primaryKey(),
             'type_id'=> $this->integer()->notNull(),//fk_product_type_idx
-            'slug_index'=> $this->char(32)->notNull(),
             'slug'=> $this->string()->notNull(),
-            'title'=> $this->string()->notNull(),
-            'vendor_code' => $this->string()->notNull(),
+            'slug_index'=> $this->char(32)->notNull(),
+            'title' => $this->string()->notNull(),
+            'badge' => $this->string()->notNull()->defaultValue(''),
             'description' => $this->text()->notNull()->defaultValue(''),
+            'vendor_code' => $this->string()->notNull(),
             'measurement_unit_id' => $this->integer()->notNull(),//'fk_product_measurement_unit_idx'
             'origin_country' => $this->char(2)->notNull(),
             'price' => $this->decimal(10,2)->notNull(),

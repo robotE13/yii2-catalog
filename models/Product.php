@@ -13,11 +13,12 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  *
  * @property int $id
  * @property int $type_id
- * @property string $slug_index
  * @property string $slug
- * @property string $title
+ * @property string $slug_index
+ * @property string $title product name
+ * @property string $badge badge for product card
+ * @property string $description product description
  * @property string $vendor_code
- * @property string $description
  * @property int $measurement_unit_id
  * @property char $origin_country
  * @property string $price
@@ -55,6 +56,14 @@ class Product extends \yii\db\ActiveRecord
                 'attribute' => 'slug',
                 'indexAttribute' => 'slug_index'
             ],
+            'uploadBehavior' => [
+                'class' => 'vova07\fileapi\behaviors\UploadBehavior',
+                'attributes' => [
+                    'badge' => [
+                        'url' => Yii::getAlias('@web/previews/')
+                    ]
+                ]
+            ],
             'textStatus'=>[
                 'class'=> TextStatusBehavior::className(),
                 'attributes'=>[
@@ -83,7 +92,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['type_id','slug','vendor_code','categoriesIds', 'title', 'description', 'measurement_unit_id', 'price','origin_country'], 'required'],
             [['type_id', 'measurement_unit_id'], 'integer'],
-            [['description'], 'string'],
+            [['description','badge'], 'string'],
             [['price'], 'number'],
             [['slug', 'title','vendor_code'], 'string', 'max' => 255],
             ['status','in','range'=> array_keys(static::getStatuses())],
