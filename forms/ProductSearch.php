@@ -73,4 +73,9 @@ class ProductSearch extends Product
 
         return $dataProvider;
     }
+
+    public function formName()
+    {
+        return '';
+    }
 }
