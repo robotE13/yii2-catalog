@@ -2,33 +2,28 @@
 
 namespace robote13\catalog\frontend\controllers;
 
-use yii\web\Controller;
+use robote13\yii2components\web\FrontendControllerAbstract;
 
 /**
  * Default controller for the `shop-catalog` module
  */
-class MainController extends Controller
+class MainController extends FrontendControllerAbstract
 {
-    /**
-     * Renders the index view for the module
-     * @return string
-     */
-    public function actionIndex()
+    public function getModelClass()
     {
-        return $this->render('index');
+        return '\robote13\catalog\models\Product';
+    }
+
+    public function getSearchClass()
+    {
+        return '\robote13\catalog\forms\ProductSearch';
     }
 
     public function actionView($id)
     {
-        return $this->render('view',['model'=> $this->findModel($id)]);
-    }
-
-    protected function findModel($id)
-    {
-        if(($model = \robote13\catalog\models\Product::find()->bySlug($id)->active()->one()))
-        {
-            return $model;
-        }
-        throw new \yii\web\NotFoundHttpException(\Yii::t('app', 'Requested page not found'));
+        $this->findModelCallback = function ($query,$id){
+            return $query->bySlug($id)->active();
+        };
+        return parent::actionView($id);
     }
 }
