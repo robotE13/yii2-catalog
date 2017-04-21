@@ -12,6 +12,7 @@ use robote13\catalog\models\Product;
  */
 class ProductSearch extends Product
 {
+    public $kind;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'type_id', 'measurement_unit_id', 'status'], 'integer'],
-            [['slug', 'title', 'description'], 'safe'],
+            [['slug', 'title','kind', 'description'], 'string'],
             [['price'], 'number'],
         ];
     }
@@ -71,7 +72,21 @@ class ProductSearch extends Product
             ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'description', $this->description]);
 
+        $this->andFilterKind($query);
+
         return $dataProvider;
+    }
+
+    /**
+     *
+     * @param \robote13\catalog\models\ProductQuery $query
+     */
+    protected function andFilterKind(&$query)
+    {
+        if($this->kind)
+        {
+            $query->typeAlias($this->kind);
+        }
     }
 
     public function formName()

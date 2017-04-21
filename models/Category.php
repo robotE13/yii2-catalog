@@ -22,7 +22,6 @@ use Yii;
 class Category extends \yii\db\ActiveRecord
 {
     use \robote13\yii2components\traits\DropdownItemsTrait;
-    const CACHE_KEY_DROPDOWN = 'robote13_catalog_categories_dropdown_items';
 
     /**
      * @inheritdoc
@@ -45,6 +44,12 @@ class Category extends \yii\db\ActiveRecord
                 'indexAttribute' => 'slug_index'
             ]
         ];
+    }
+
+    public function init()
+    {
+        $this->attachInvalidate();
+        parent::init();
     }
 
     /**

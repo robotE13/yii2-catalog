@@ -9,6 +9,16 @@ class Module extends \yii\base\Module
 {
 
     /**
+     *
+     * @var
+     */
+    public $relations = [
+        'Album' => [
+            'album' => ['robote13\filemanager\models\Album', ['album_id' => 'id'], true]
+        ]
+    ];
+
+    /**
      * @inheritdoc
      */
     public $defaultRoute = 'main';
@@ -24,6 +34,7 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
+        //models\Product::$albumModel = $this->albumModel;
         $this->setDefaultViewPath();
     }
 

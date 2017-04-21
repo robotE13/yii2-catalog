@@ -16,14 +16,21 @@ use Yii;
  */
 class ProductType extends \yii\db\ActiveRecord
 {
+
     use \robote13\yii2components\traits\DropdownItemsTrait;
-    const CACHE_KEY_DROPDOWN = 'robote13_catalog_types_dropdown_items';
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return '{{%product_type}}';
+    }
+
+    public function init()
+    {
+        $this->attachInvalidate();
+        parent::init();
     }
 
     /**
