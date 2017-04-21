@@ -1,6 +1,8 @@
 <?php
 
 return[
+    'By price' => 'По цене',
+    'By title' => 'По названию',
     'Catalog' => 'Каталог',
     'Categories' => 'Категории товаров',
     'Create Category' => 'Добавить категорию',
