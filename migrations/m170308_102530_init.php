@@ -88,7 +88,7 @@ class m170308_102530_init extends Migration
         $this->createTable("{{%leftover}}", [
             'warehouse_id'=> $this->integer()->notNull(),
             'product_id' => $this->integer()->notNull(),
-            'left_in_stok' => $this->integer()->null()
+            'left_in_stock' => $this->integer()->null()
         ], $this->tableOptions);
         $this->addPrimaryKey('', "{{%leftover}}",['warehouse_id','product_id']);
         $this->createIndex('fk_leftover_idx', "{{%leftover}}", 'warehouse_id');

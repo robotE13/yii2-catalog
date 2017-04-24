@@ -9,6 +9,8 @@ return[
     'Create Product Type' => 'Создать новый тип',
     'Create Warehouse' => 'Добавить склад',
     'Description' => 'Описание',
+    'Leftovers' => 'Остатки',
+    'Left In Stock' => 'Остаток',
     'Measurement units' => 'Единицы измерения',
     'Price' => 'Цена',
     'Products' => 'Список товаров',
@@ -20,6 +22,7 @@ return[
     'Title' => 'Название',
     'Vendor Code' => 'Артикул',
     'Warehouse' => 'Склад',
+    'Warehouse ID' => 'Склад',
     'Warehouses' => 'Склады'
 ];
 

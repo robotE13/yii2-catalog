@@ -2,6 +2,7 @@
 
 namespace robote13\catalog\backend\controllers;
 
+use Yii;
 use yii\web\NotFoundHttpException;
 use robote13\yii2components\web\CrudControllerAbstract;
 
@@ -28,6 +29,21 @@ class ProductController extends CrudControllerAbstract
             return['dataProvider'=>$dataProvider];
         };
         parent::init();
+    }
+
+    public function actionCreate()
+    {
+        $model = Yii::createObject($this->modelClass);
+        $leftovers = [Yii::createObject(\robote13\catalog\models\Leftover::className())];
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'leftovers'=>$leftovers
+            ]);
+        }
     }
 
     /**

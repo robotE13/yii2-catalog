@@ -16,12 +16,21 @@ use Yii;
  */
 class Warehouse extends \yii\db\ActiveRecord
 {
+
+    use \robote13\yii2components\traits\DropdownItemsTrait;
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return '{{%catalog_warehouse}}';
+    }
+
+    public function init()
+    {
+        $this->attachInvalidate();
+        parent::init();
     }
 
     /**

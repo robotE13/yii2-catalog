@@ -123,7 +123,7 @@ class Product extends \yii\db\ActiveRecord
             'title' => Yii::t('robote13/catalog', 'Title'),
             'vendor_code' => Yii::t('robote13/catalog', 'Vendor Code'),
             'description' => Yii::t('robote13/catalog', 'Description'),
-            'measurement_unit_id' => Yii::t('robote13/catalog', 'Measurement Unit ID'),
+            'measurement_unit_id' => Yii::t('robote13/catalog', 'Measurement units'),
             'origin_country' => Yii::t('robote13/catalog', 'Origin'),
             'price' => Yii::t('robote13/catalog', 'Price'),
             'status' => Yii::t('robote13/catalog', 'Status'),

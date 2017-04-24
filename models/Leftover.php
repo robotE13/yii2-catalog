@@ -45,7 +45,7 @@ class Leftover extends \yii\db\ActiveRecord
         return [
             'warehouse_id' => Yii::t('robote13/catalog', 'Warehouse ID'),
             'product_id' => Yii::t('robote13/catalog', 'Product ID'),
-            'left_in_stok' => Yii::t('robote13/catalog', 'Left In Stok'),
+            'left_in_stock' => Yii::t('robote13/catalog', 'Left In Stock'),
         ];
     }
 
