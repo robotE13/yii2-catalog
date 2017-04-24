@@ -3,11 +3,11 @@
 namespace robote13\catalog\models;
 
 /**
- * This is the ActiveQuery class for [[WarehouseProduct]].
+ * This is the ActiveQuery class for [[Leftover]].
  *
- * @see WarehouseProduct
+ * @see Leftover
  */
-class WarehouseProductQuery extends \yii\db\ActiveQuery
+class LeftoverQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class WarehouseProductQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return WarehouseProduct[]|array
+     * @return Leftover[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class WarehouseProductQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return WarehouseProduct|array|null
+     * @return Leftover|array|null
      */
     public function one($db = null)
     {

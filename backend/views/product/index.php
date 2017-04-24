@@ -24,16 +24,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'type_id',
-            'slug',
+            'vendor_code',
             'title',
-            // 'description:ntext',
-            // 'measurement_unit_id',
-            // 'price',
-            // 'status',
-
+            [
+                'attribute'=>'type_id',
+                'value'=>function($model){return $model->type->title;},
+                'filter'=> robote13\catalog\models\ProductType::dropdownItems('title','id')
+            ],
+            'slug',
+            'price',
+            [
+                'attribute'=>'status',
+                'filter'=> \robote13\catalog\models\Product::getStatuses(),
+                'value'=>'statusText'
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

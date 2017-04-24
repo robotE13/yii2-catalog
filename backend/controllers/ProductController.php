@@ -21,6 +21,15 @@ class ProductController extends CrudControllerAbstract
         return 'robote13\catalog\forms\ProductSearch';
     }
 
+    public function init()
+    {
+        $this->indexViewParams = function($searchModel,$dataProvider){
+            $dataProvider->query->with('type');
+            return['dataProvider'=>$dataProvider];
+        };
+        parent::init();
+    }
+
     /**
      * Displays a single Product model.
      * @param integer $id

@@ -84,17 +84,17 @@ class m170308_102530_init extends Migration
         $this->createIndex('fk_characteristic_type_idx', "{{%type_characteristic}}", ['type_id','attribute'],true);
         $this->addForeignKey('fk_characteristic_type', "{{%type_characteristic}}", 'type_id', "{{%product_type}}", 'id', 'CASCADE', 'CASCADE');
 
-        // Product <--> Warehouses
-        $this->createTable("{{%warehouse_product}}", [
+        // Product <--> Warehouses (Leftovers)
+        $this->createTable("{{%leftover}}", [
             'warehouse_id'=> $this->integer()->notNull(),
             'product_id' => $this->integer()->notNull(),
             'left_in_stok' => $this->integer()->null()
         ], $this->tableOptions);
-        $this->addPrimaryKey('', "{{%warehouse_product}}",['warehouse_id','product_id']);
-        $this->createIndex('fk_warehouse_product_idx', "{{%warehouse_product}}", 'warehouse_id');
-        $this->createIndex('fk_product_warehouse_idx', "{{%warehouse_product}}", 'product_id');
-        $this->addForeignKey('warehouse_product', "{{%warehouse_product}}", 'warehouse_id', "{{%catalog_warehouse}}", 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('product_warehouse', "{{%warehouse_product}}", 'product_id', "{{%catalog_product}}", 'id', 'CASCADE', 'CASCADE');
+        $this->addPrimaryKey('', "{{%leftover}}",['warehouse_id','product_id']);
+        $this->createIndex('fk_leftover_idx', "{{%leftover}}", 'warehouse_id');
+        $this->createIndex('fk_product_warehouse_idx', "{{%leftover}}", 'product_id');
+        $this->addForeignKey('leftover', "{{%leftover}}", 'warehouse_id', "{{%catalog_warehouse}}", 'id', 'CASCADE', 'CASCADE');
+        $this->addForeignKey('product_warehouse', "{{%leftover}}", 'product_id', "{{%catalog_product}}", 'id', 'CASCADE', 'CASCADE');
 
         // Product <--> Categories
         $this->createTable("{{%category_product}}", [

@@ -26,13 +26,13 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  * @property string $updated_in
  * @property string $textStatus
  *
+ * @property Category[] $categories
+ * @property CategoryProduct[] $categoryProducts
+ * @property Leftover[] $leftovers
  * @property MeasurementUnit $measurementUnit
  * @property ProductType $type
- * @property CategoryProduct[] $categoryProducts
- * @property Category[] $categories
- * @property SetProduct[] $setProducts
  * @property Set[] $sets
- * @property WarehouseProduct[] $warehouseProducts
+ * @property SetProduct[] $setProducts
  * @property Warehouse[] $warehouses
  */
 class Product extends \yii\db\ActiveRecord
@@ -126,6 +126,7 @@ class Product extends \yii\db\ActiveRecord
             'measurement_unit_id' => Yii::t('robote13/catalog', 'Measurement Unit ID'),
             'origin_country' => Yii::t('robote13/catalog', 'Origin'),
             'price' => Yii::t('robote13/catalog', 'Price'),
+            'status' => Yii::t('robote13/catalog', 'Status'),
             'textStatus' => Yii::t('robote13/catalog', 'Status'),
         ];
     }
@@ -186,9 +187,9 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getWarehouseProducts()
+    public function getLeftovers()
     {
-        return $this->hasMany(WarehouseProduct::className(), ['product_id' => 'id']);
+        return $this->hasMany(Leftover::className(), ['product_id' => 'id']);
     }
 
     /**

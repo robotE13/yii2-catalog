@@ -11,7 +11,7 @@ use Yii;
  * @property string $title
  * @property string $description
  *
- * @property WarehouseProduct[] $warehouseProducts
+ * @property Leftover[] $leftovers
  * @property Product[] $products
  */
 class Warehouse extends \yii\db\ActiveRecord
@@ -51,9 +51,9 @@ class Warehouse extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getWarehouseProducts()
+    public function getLeftovers()
     {
-        return $this->hasMany(WarehouseProduct::className(), ['warehouse_id' => 'id']);
+        return $this->hasMany(Leftover::className(), ['warehouse_id' => 'id']);
     }
 
     /**

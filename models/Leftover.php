@@ -14,14 +14,14 @@ use Yii;
  * @property Product $product
  * @property Warehouse $warehouse
  */
-class WarehouseProduct extends \yii\db\ActiveRecord
+class Leftover extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%warehouse_product}}';
+        return '{{%leftover}}';
     }
 
     /**

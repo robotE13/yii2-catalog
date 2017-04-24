@@ -22,7 +22,8 @@
         "robote13/countries-list":"*",
         "robote13/yii2-components":"*",
         "voskobovich/yii2-linker-behavior":"dev-master",
-        "vova07/yii2-fileapi-widget": "dev-feature-flysystem"
+        "vova07/yii2-fileapi-widget": "dev-feature-flysystem",
+        "wbraganca/yii2-dynamicform": "dev-master"
     },
     "require-dev":{
         "yiisoft/yii2-faker": "~2.0.0"
