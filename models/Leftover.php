@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $warehouse_id
  * @property int $product_id
- * @property int $left_in_stok
+ * @property int $left_in_stock
  *
  * @property Product $product
  * @property Warehouse $warehouse
@@ -30,9 +30,9 @@ class Leftover extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['warehouse_id', 'product_id'], 'required'],
-            [['warehouse_id', 'product_id', 'left_in_stok'], 'integer'],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['left_in_stock'], 'required'],
+            [['warehouse_id', 'product_id', 'left_in_stock'], 'integer'],
+            //[['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['warehouse_id'], 'exist', 'skipOnError' => true, 'targetClass' => Warehouse::className(), 'targetAttribute' => ['warehouse_id' => 'id']],
         ];
     }
@@ -71,6 +71,6 @@ class Leftover extends \yii\db\ActiveRecord
      */
     public static function find()
     {
-        return new WarehouseProductQuery(get_called_class());
+        return new LeftoverQuery(get_called_class());
     }
 }

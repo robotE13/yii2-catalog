@@ -83,6 +83,7 @@ $this->registerJs('$(".dynamicform_wrapper").on("beforeInsert", function(e, item
                 <div class="clearfix"></div>
             </div>
             <div class="panel-body">
+                <?=$form->errorSummary($leftovers)?>
                     <div class="container-items row">
                         <?php    foreach ($leftovers as $key => $leftover):?>
                         <div class="item-leftover col-lg-6 row">

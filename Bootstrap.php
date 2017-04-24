@@ -8,6 +8,8 @@
 
 namespace robote13\catalog;
 
+use Yii;
+
 /**
  * Description of Bootstrap
  *
@@ -19,6 +21,7 @@ class Bootstrap implements \yii\base\BootstrapInterface
     {
         if($app instanceof \yii\web\Application)
         {
+            Yii::$container->set('sidanval\tabular\TabularForm', components\TabularForm::className());
             $app->i18n->translations['robote13/catalog'] = [
                 'class' => 'yii\i18n\PhpMessageSource',
                 'sourceLanguage' => 'en-US',
