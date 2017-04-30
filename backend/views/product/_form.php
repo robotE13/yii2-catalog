@@ -96,10 +96,19 @@ $this->registerJs('$(".dynamicform_wrapper").on("beforeInsert", function(e, item
             </div>
         </div>
         <?php DynamicFormWidget::end()?>
+            <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title pull-left"><?= Yii::t('robote13/catalog', 'Related products')?></h4>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
 
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('robote13/catalog', 'Save'), ['class' => 'btn btn-success']) ?>
-    </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <?= Html::submitButton(Yii::t('robote13/catalog', 'Save'), ['class' => 'btn btn-success']) ?>
+        </div>
     </div>
     <?php ActiveForm::end(); ?>
 

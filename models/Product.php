@@ -31,6 +31,7 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  * @property Leftover[] $leftovers
  * @property MeasurementUnit $measurementUnit
  * @property ProductType $type
+ * @property Product[] $related "с этим товаром покупают"
  * @property Set[] $sets
  * @property SetProduct[] $setProducts
  * @property Warehouse[] $warehouses
@@ -167,6 +168,22 @@ class Product extends \yii\db\ActiveRecord
     public function getCategories()
     {
         return $this->hasMany(Category::className(), ['id' => 'category_id'])->via('categoryProducts');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRelatedProducts()
+    {
+        return $this->hasMany(RelatedProduct::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRelated()
+    {
+        return $this->hasMany(Product::className(), ['id'=>'related_id'])->via('relatedProducts');
     }
 
     /**
