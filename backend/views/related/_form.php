@@ -1,8 +1,11 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
+use kartik\select2\Select2;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $model robote13\catalog\models\RelatedProduct */
@@ -21,7 +24,24 @@ $this->registerJs(
     <?php Pjax::begin(['id'=>'new-record']); ?>
         <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true]]); ?>
 
-			<?= $form->field($model, 'related_id')->textInput() ?>
+            <?= $form->field($model, 'related_id')->widget(Select2::className(),[
+                'theme' => 'default',
+                'options'=>[
+                    'placeholder' => Yii::t('robote13/catalog','Select related ...'),
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                    'minimumInputLength' => 3,
+                    'ajax' => [
+                        'url' => Url::to(['products-list']),
+                        'method'=>'POST',
+                        'dataType' => 'json',
+                        'data' => new JsExpression('function(params) { return {q:params.term};}')
+                    ],
+                    'templateResult' => new JsExpression("function (product) { return product.vendor_code +' ' + product.title; }"),
+                    'templateSelection' => new JsExpression("function (product) { return product.title; }")
+                ]
+            ])?>
 
             <div class="form-group">
                 <?= Html::submitButton($model->isNewRecord ? Yii::t('robote13/catalog', 'Create') : Yii::t('robote13/catalog', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -8,13 +8,14 @@ use yii\grid\GridView;
 /* @var $searchModel robote13\catalog\models\RelatedSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 Yii::$app->user->returnUrl = Url::to(['product/index']);
-$this->title = Yii::t('robote13/catalog', 'Related Products');
+$this->title = Yii::t('robote13/catalog', 'Related products');
 $this->params['breadcrumbs'][] = ['url'=> Url::previous("product-index"),'label'=>Yii::t('robote13/catalog', 'Products')];
+$this->params['breadcrumbs'][] = ['url'=> ['product/update','id'=>$model->product_id],'label'=>$product];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="related-product-index">
     <div class="panel panel-default">
-        <div class="panel-heading"><?=Yii::t('robote13/catalog', 'Create Related Product')?></div>
+        <div class="panel-heading"><?=Yii::t('robote13/catalog', 'Add related product')?></div>
         <div class="panel-body">
         <?= $this->render('_form', [
             'model' => $model,

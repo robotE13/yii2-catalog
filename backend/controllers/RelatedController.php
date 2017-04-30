@@ -14,6 +14,16 @@ use yii\filters\VerbFilter;
  */
 class RelatedController extends Controller
 {
+    public function actions()
+    {
+        return[
+            'products-list'=>[
+                'class'=> \robote13\yii2components\web\Select2GetListAction::className(),
+                'modelClass' => \robote13\catalog\models\Product::className(),
+                'searchAttribute' => 'title'
+            ]
+        ];
+    }
     /**
      * @inheritdoc
      */
@@ -47,6 +57,7 @@ class RelatedController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'product' => \robote13\catalog\models\Product::find()->where(['id'=>$id])->select('title')->scalar(),
             'model' => $model
         ]);
     }

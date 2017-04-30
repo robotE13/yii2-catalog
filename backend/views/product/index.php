@@ -38,7 +38,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'=> \robote13\catalog\models\Product::getStatuses(),
                 'value'=>'statusText'
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttons'=>[
+                    'view' => function ($url,$model,$key){
+                        return Html::a('Rel', ['related/index','id'=>$model->id]);
+                    }
+                ]
+            ],
         ],
     ]); ?>
 </div>
