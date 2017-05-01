@@ -34,6 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'slug',
             'price',
             [
+                'attribute'=>'popularity',
+                'filter'=>false
+            ],
+            [
                 'attribute'=>'status',
                 'filter'=> \robote13\catalog\models\Product::getStatuses(),
                 'value'=>'statusText'

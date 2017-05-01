@@ -22,10 +22,11 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  * @property int $measurement_unit_id
  * @property char $origin_country
  * @property string $price
- * @property int $status
+ * @property integer $status
+ * @property integer $popularity
  * @property string $updated_in
- * @property string $textStatus
  *
+ * @property string $textStatus
  * @property Category[] $categories
  * @property CategoryProduct[] $categoryProducts
  * @property Leftover[] $leftovers
