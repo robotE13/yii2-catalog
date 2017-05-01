@@ -25,6 +25,16 @@ class ProductController extends CrudControllerAbstract
         return 'robote13\catalog\forms\ProductSearch';
     }
 
+    public function actions()
+    {
+        return[
+            'update-editable'=>[
+                'class'=> \robote13\yii2components\web\EditableAction::className(),
+                'modelClass'=> \robote13\catalog\models\Product::className()
+            ]
+        ];
+    }
+
     public function init()
     {
         $this->indexViewParams = function($searchModel,$dataProvider){

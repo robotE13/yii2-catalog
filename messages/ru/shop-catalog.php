@@ -3,6 +3,7 @@
 return[
     'By price' => 'По цене',
     'By title' => 'По названию',
+    'By popularity' => 'По популярности',
     'Catalog' => 'Каталог',
     'Categories' => 'Категории товаров',
     'Create Category' => 'Добавить категорию',
@@ -13,6 +14,7 @@ return[
     'Left In Stock' => 'Остаток',
     'Measurement units' => 'Единицы измерения',
     'Price' => 'Цена',
+    'Popularity' => 'Популярность',
     'Products' => 'Список товаров',
     'Product details' => 'Подробнее о товаре',
     'Product types' => 'Типы товаров',

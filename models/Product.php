@@ -94,7 +94,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['type_id','slug','vendor_code', 'title', 'description', 'measurement_unit_id', 'price','origin_country'], 'required'],
             ['categoriesIds','each','rule'=>['integer']],
-            [['type_id', 'measurement_unit_id'], 'integer'],
+            [['type_id', 'measurement_unit_id','popularity'], 'integer'],
             [['description','badge'], 'string'],
             [['price'], 'number'],
             [['slug', 'title','vendor_code'], 'string', 'max' => 255],
@@ -130,6 +130,7 @@ class Product extends \yii\db\ActiveRecord
             'origin_country' => Yii::t('robote13/catalog', 'Origin'),
             'price' => Yii::t('robote13/catalog', 'Price'),
             'status' => Yii::t('robote13/catalog', 'Status'),
+            'popularity' => Yii::t('robote13/catalog', 'Popularity'),
             'textStatus' => Yii::t('robote13/catalog', 'Status'),
         ];
     }

@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use kartik\editable\Editable;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel robote13\catalog\forms\ProductSearch */
@@ -35,6 +37,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'price',
             [
                 'attribute'=>'popularity',
+                'content'=>function($model,$key,$index,$column){
+                    return Editable::widget([
+                        'options'=>[ 'id'=>"editable-{$index}"],
+                        'model'=>$model,
+                        'attribute'=>'popularity',
+                        'beforeInput'=>function($form,$widget){
+                            return Html::hiddenInput('editableKey', $widget->model->primaryKey);
+                                //.Html::hiddenInput('attribute', $widget->attribute);
+                        },
+                        'asPopover'=>false,
+                        'ajaxSettings'=>[
+                            'url'=> Url::to(['update-editable'])
+                        ]
+                    ]);
+                },
                 'filter'=>false
             ],
             [
