@@ -25,7 +25,7 @@ $this->registerJs(
         <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true]]); ?>
 
             <?= $form->field($model, 'related_id')->widget(Select2::className(),[
-                'theme' => 'default',
+                'theme' => Select2::THEME_BOOTSTRAP,
                 'options'=>[
                     'placeholder' => Yii::t('robote13/catalog','Select related ...'),
                 ],
@@ -38,13 +38,13 @@ $this->registerJs(
                         'dataType' => 'json',
                         'data' => new JsExpression('function(params) { return {q:params.term};}')
                     ],
-                    'templateResult' => new JsExpression("function (product) { return product.vendor_code +' ' + product.title; }"),
-                    'templateSelection' => new JsExpression("function (product) { return product.title; }")
+                    'templateResult' => new JsExpression("function (product) { return product.title===undefined?product.text:product.vendor_code +' ' + product.title; }"),
+                    'templateSelection' => new JsExpression("function (product) { return product.title===undefined?product.text:product.vendor_code +' ' + product.title; }")
                 ]
             ])?>
 
             <div class="form-group">
-                <?= Html::submitButton($model->isNewRecord ? Yii::t('robote13/catalog', 'Create') : Yii::t('robote13/catalog', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                <?= Html::submitButton(Yii::t('robote13/catalog', 'Link'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
             </div>
 
         <?php ActiveForm::end();?>

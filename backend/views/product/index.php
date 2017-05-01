@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => 'yii\grid\ActionColumn',
                 'buttons'=>[
                     'view' => function ($url,$model,$key){
-                        return Html::a('Rel', ['related/index','id'=>$model->id]);
+                        return Html::a(Html::tag('span','',['class'=>'glyphicon glyphicon-link']), ['related/index','id'=>$model->id]);
                     }
                 ]
             ],

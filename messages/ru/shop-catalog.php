@@ -16,6 +16,7 @@ return[
     'Products' => 'Список товаров',
     'Product details' => 'Подробнее о товаре',
     'Product types' => 'Типы товаров',
+    'Related products' => 'Похожие товары',
     'Slug' => 'Псевдоним для ЧПУ',
     'Status' => 'Статус',
     'Type ID' => 'Тип товара',

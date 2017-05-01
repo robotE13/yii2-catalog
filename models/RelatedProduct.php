@@ -23,6 +23,13 @@ class RelatedProduct extends \yii\db\ActiveRecord
         return '{{%related_product}}';
     }
 
+    public function transactions()
+    {
+        return[
+            self::SCENARIO_DEFAULT=>self::OP_INSERT|self::OP_DELETE
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -59,5 +66,20 @@ class RelatedProduct extends \yii\db\ActiveRecord
     public function getRelated()
     {
         return $this->hasOne(Product::className(), ['id' => 'related_id']);
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        Yii::$app->db->createCommand()->insert(self::tableName(),[
+            'product_id'=> $this->related_id,
+            'related_id'=>$this->product_id
+        ])->execute();
+        parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function afterDelete()
+    {
+        self::deleteAll(['product_id'=> $this->related_id,'related_id'=> $this->product_id]);
+        parent::afterDelete();
     }
 }
