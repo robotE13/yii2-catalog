@@ -11,12 +11,12 @@ class MainController extends FrontendControllerAbstract
 {
     public function getModelClass()
     {
-        return '\robote13\catalog\models\Product';
+        return 'robote13\catalog\models\Product';
     }
 
     public function getSearchClass()
     {
-        return '\robote13\catalog\forms\ProductSearch';
+        return 'robote13\catalog\forms\ProductSearch';
     }
 
     public function actionView($id)
