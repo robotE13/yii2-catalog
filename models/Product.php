@@ -39,6 +39,7 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  */
 class Product extends \yii\db\ActiveRecord
 {
+    const STATUS_NOT_IN_STOCK = 3;
     const STATUS_DELETED = 2;
     const STATUS_ACTIVE = 1;
 
@@ -108,6 +109,7 @@ class Product extends \yii\db\ActiveRecord
     {
         return[
             self::STATUS_ACTIVE => Yii::t('robote13/catalog', 'Active'),
+            self::STATUS_NOT_IN_STOCK => Yii::t('robote13/catalog', 'Not in stock'),
             self::STATUS_DELETED => Yii::t('robote13/catalog', 'Deleted')
         ];
     }

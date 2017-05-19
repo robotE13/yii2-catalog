@@ -1,6 +1,8 @@
 <?php
 
 return[
+    'Active' => 'В наличии',
+    'Add to cart' => 'Добавить в корзину',
     'By price' => 'По цене',
     'By title' => 'По названию',
     'By popularity' => 'По популярности',
@@ -13,6 +15,7 @@ return[
     'Leftovers' => 'Остатки',
     'Left In Stock' => 'Остаток',
     'Measurement units' => 'Единицы измерения',
+    'Not in stock' => 'Нет на складе',
     'Price' => 'Цена',
     'Popularity' => 'Популярность',
     'Products' => 'Список товаров',
