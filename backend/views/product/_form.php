@@ -8,6 +8,7 @@ use robote13\catalog\models\ProductType;
 use robote13\catalog\models\MeasurementUnit;
 use vova07\fileapi\Widget;
 use wbraganca\dynamicform\DynamicFormWidget;
+use vova07\imperavi\Widget as Redactor;
 
 /* @var $this yii\web\View */
 /* @var $model robote13\catalog\models\Product */
@@ -17,6 +18,29 @@ use wbraganca\dynamicform\DynamicFormWidget;
 $this->registerJs('$(".dynamicform_wrapper").on("beforeInsert", function(e, item) {
     console.log("beforeInsert");
 });', yii\web\View::POS_READY);
+
+$redactorSettings = [
+    'lang'=>'ru',
+    'minHeight' => 200,
+    'maxHeight' => 200,
+    'plugins' => [
+        'clips',
+        'fullscreen',
+    ],
+    'buttons' => ['html', 'formatting', 'bold', 'italic','underline' ,'deleted',
+        'unorderedlist', 'orderedlist', 'outdent', 'indent',
+        'link', 'alignment', 'horizontalrule'],
+    'buttonSource' => true,
+    'formattingAdd'=>[
+        'text-info'=>[
+            'title'=>'Attention',
+            'tag'=>'p',
+            'type'=>'block',
+            'class'=>'text-alert'
+        ]
+    ],
+    'replaceDivs' =>true
+];
 ?>
 
 <div class="product-form">
@@ -63,7 +87,7 @@ $this->registerJs('$(".dynamicform_wrapper").on("beforeInsert", function(e, item
         </div>
     </div>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'description')->textarea(['rows' => 6])->widget(Redactor::className(),['settings'=>$redactorSettings]) ?>
         <?php DynamicFormWidget::begin([
             'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
             'widgetBody' => '.container-items', // required: css class selector

@@ -1,7 +1,7 @@
 <?php
 
 return[
-    'Active' => 'В наличии',
+    'Archive' => 'Нет в продаже',
     'Add to cart' => 'Добавить в корзину',
     'By price' => 'По цене',
     'By title' => 'По названию',
@@ -12,6 +12,7 @@ return[
     'Create Product Type' => 'Создать новый тип',
     'Create Warehouse' => 'Добавить склад',
     'Description' => 'Описание',
+    'In stock' => 'В наличии',
     'Leftovers' => 'Остатки',
     'Left In Stock' => 'Остаток',
     'Measurement units' => 'Единицы измерения',

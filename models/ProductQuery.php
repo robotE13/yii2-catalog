@@ -11,7 +11,7 @@ class ProductQuery extends \yii\db\ActiveQuery
 {
     public function active()
     {
-        return $this->andWhere(['status'=> Product::STATUS_ACTIVE]);
+        return $this->andWhere(['status'=> [Product::STATUS_IN_STOCK, Product::STATUS_NOT_IN_STOCK]]);
     }
 
     public function type($type)

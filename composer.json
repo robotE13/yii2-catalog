@@ -26,6 +26,7 @@
         "sidanval/yii2-tabular":"dev-master",
         "voskobovich/yii2-linker-behavior":"dev-master",
         "vova07/yii2-fileapi-widget": "dev-feature-flysystem",
+        "vova07/yii2-imperavi-widget" : "dev-master",
         "wbraganca/yii2-dynamicform": "dev-master"
     },
     "require-dev":{
