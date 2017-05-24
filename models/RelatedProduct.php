@@ -36,6 +36,8 @@ class RelatedProduct extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['related_id','required'],
+            ['related_id','unique','targetAttribute'=>['product_id','related_id']],
             [['product_id'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['related_id'], 'exist', 'targetClass' => Product::className(), 'targetAttribute' => ['related_id' => 'id']],
         ];

@@ -34,7 +34,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'=> robote13\catalog\models\ProductType::dropdownItems('title','id')
             ],
             'slug',
-            'price',
+            [
+                'attribute'=>'price',
+                'content'=>function($model,$key,$index,$column){
+                    return Editable::widget([
+                        'options'=>[ 'id'=>"editable-price-{$index}"],
+                        'model'=>$model,
+                        'attribute'=>'price',
+                        'beforeInput'=>function($form,$widget){
+                            return Html::hiddenInput('editableKey', $widget->model->primaryKey);
+                        },
+                        'asPopover'=>false,
+                        'ajaxSettings'=>[
+                            'url'=> Url::to(['update-editable'])
+                        ]
+                    ]);
+                },
+            ],
             [
                 'attribute'=>'popularity',
                 'content'=>function($model,$key,$index,$column){
@@ -44,7 +60,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute'=>'popularity',
                         'beforeInput'=>function($form,$widget){
                             return Html::hiddenInput('editableKey', $widget->model->primaryKey);
-                                //.Html::hiddenInput('attribute', $widget->attribute);
                         },
                         'asPopover'=>false,
                         'ajaxSettings'=>[

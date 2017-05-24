@@ -36,7 +36,7 @@ $this->registerJs(
                         'url' => Url::to(['products-list']),
                         'method'=>'POST',
                         'dataType' => 'json',
-                        'data' => new JsExpression('function(params) { return {q:params.term};}')
+                        'data' => new JsExpression("function(params) {return {q:params.term,exc:{$model->product_id}};}")
                     ],
                     'templateResult' => new JsExpression("function (product) { return product.title===undefined?product.text:product.vendor_code +' ' + product.title; }"),
                     'templateSelection' => new JsExpression("function (product) { return product.title===undefined?product.text:product.vendor_code +' ' + product.title; }")
