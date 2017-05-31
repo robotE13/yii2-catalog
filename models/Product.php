@@ -27,6 +27,7 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  * @property string $updated_in
  *
  * @property string $textStatus
+ * @property-read boolean $isAvailable
  * @property Category[] $categories
  * @property CategoryProduct[] $categoryProducts
  * @property Leftover[] $leftovers
@@ -138,6 +139,14 @@ class Product extends \yii\db\ActiveRecord
             'popularity' => Yii::t('robote13/catalog', 'Popularity'),
             'textStatus' => Yii::t('robote13/catalog', 'Status'),
         ];
+    }
+
+    public function getIsAvailable()
+    {
+        return in_array($this->status,[
+            static::STATUS_IN_STOCK,
+            static::STATUS_NOT_IN_STOCK
+        ]);
     }
 
     /**

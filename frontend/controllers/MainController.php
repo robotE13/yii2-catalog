@@ -22,7 +22,7 @@ class MainController extends FrontendControllerAbstract
     public function actionView($id)
     {
         $this->findModelCallback = function ($query,$id){
-            return $query->bySlug($id)->active();
+            return $query->bySlug($id);
         };
         return parent::actionView($id);
     }

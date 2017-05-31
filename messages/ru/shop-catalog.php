@@ -27,6 +27,7 @@ return[
     'Status' => 'Статус',
     'Type ID' => 'Тип товара',
     'Title' => 'Название',
+    'This item is not available for sale' => 'Этот товар отсутствует в продаже',
     'Vendor Code' => 'Артикул',
     'Warehouse' => 'Склад',
     'Warehouse ID' => 'Склад',
