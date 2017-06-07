@@ -44,7 +44,7 @@ class ProductController extends CrudControllerAbstract
         parent::init();
     }
 
-    public function actionCreate()
+    /*public function actionCreate()
     {
         $tabular = Yii::createObject([
             'class'=> TabularForm::className(),
@@ -63,7 +63,7 @@ class ProductController extends CrudControllerAbstract
                 'leftovers'=>$tabular->models
             ]);
         }
-    }
+    }*/
 
     /**
      * Updates an existing model.
@@ -71,7 +71,7 @@ class ProductController extends CrudControllerAbstract
      * @param mixed $id
      * @return mixed
      */
-    public function actionUpdate()
+    /*public function actionUpdate()
     {
         $id = Yii::$app->getRequest()->get('id');
         $tabular = Yii::createObject([
@@ -91,7 +91,7 @@ class ProductController extends CrudControllerAbstract
                 'leftovers' => !empty($tabular->models)?$tabular->models:[Yii::createObject(Leftover::className())]
             ]);
         }
-    }
+    }*/
 
     /**
      * Displays a single Product model.

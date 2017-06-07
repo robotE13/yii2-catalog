@@ -12,6 +12,7 @@ use Yii;
  * @property string $description
  *
  * @property Leftover[] $leftovers
+ * @property LeftoverOperation[] $operations
  * @property Product[] $products
  */
 class Warehouse extends \yii\db\ActiveRecord
@@ -63,6 +64,11 @@ class Warehouse extends \yii\db\ActiveRecord
     public function getLeftovers()
     {
         return $this->hasMany(Leftover::className(), ['warehouse_id' => 'id']);
+    }
+
+    public function getOperations()
+    {
+        return $this->hasMany(LeftoverOperation::className(), ['warehouse_id'=>'id']);
     }
 
     /**

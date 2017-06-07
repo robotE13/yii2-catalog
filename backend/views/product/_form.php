@@ -2,12 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use robote13\catalog\models\Warehouse;
 use robote13\catalog\models\Category;
 use robote13\catalog\models\ProductType;
 use robote13\catalog\models\MeasurementUnit;
 use vova07\fileapi\Widget;
-use wbraganca\dynamicform\DynamicFormWidget;
 use vova07\imperavi\Widget as Redactor;
 
 /* @var $this yii\web\View */
@@ -15,9 +13,9 @@ use vova07\imperavi\Widget as Redactor;
 /* @var $form yii\widgets\ActiveForm */
 /* @var $leftovers robote13\catalog\models\Leftover[] */
 
-$this->registerJs('$(".dynamicform_wrapper").on("beforeInsert", function(e, item) {
+/*$this->registerJs('$(".dynamicform_wrapper").on("beforeInsert", function(e, item) {
     console.log("beforeInsert");
-});', yii\web\View::POS_READY);
+});', yii\web\View::POS_READY);*/
 
 $redactorSettings = [
     'lang'=>'ru',
@@ -88,51 +86,33 @@ $redactorSettings = [
     </div>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6])->widget(Redactor::className(),['settings'=>$redactorSettings]) ?>
-        <?php DynamicFormWidget::begin([
-            'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
-            'widgetBody' => '.container-items', // required: css class selector
-            'widgetItem' => '.item-leftover', // required: css class
-            'min' => 1, // 0 or 1 (default 1)
-            'limit' => 99, // 0 or 1 (default 1)
-            'insertButton' => '.add-item', // css class
-            'deleteButton' => '.remove-item', // css class
-            'model' => $leftovers[0],
-            'formId' => 'create-product-form',
-            'formFields' => ['warehouse_id','left_in_stock']
-        ])?>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title pull-left"><?= Yii::t('robote13/catalog', 'Leftovers')?></h4>
-                <button type="button" class="add-item btn btn-success btn-xs pull-right">Еще склад</button>
-                <div class="clearfix"></div>
-            </div>
-            <div class="panel-body">
-                <?=$form->errorSummary($leftovers)?>
-                    <div class="container-items row">
-                        <?php    foreach ($leftovers as $key => $leftover):?>
-                        <div class="item-leftover col-lg-6 row">
-                            <?=$form->field($leftover, "[{$key}]warehouse_id",['options'=>['class'=>'form-group col-xs-7']])->dropDownList(Warehouse::dropdownItems('id', 'title'))?>
-                            <?=$form->field($leftover, "[{$key}]left_in_stock",['options'=>['class'=>'form-group col-xs-3']])?>
-                            <div class="col-xs-2 text-center"><button type="button" class="remove-item btn btn-danger btn-xs">Убрать</button></div>
-                        </div>
-                        <?php                endforeach;?>
-                    </div>
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><?= Yii::t('robote13/catalog', 'Leftovers')?></h4>
         </div>
-        <?php DynamicFormWidget::end()?>
-            <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title pull-left"><?= Yii::t('robote13/catalog', 'Related products')?></h4>
-                <div class="clearfix"></div>
-            </div>
-            <div class="panel-body">
+        <div class="panel-body">
+            <?=yii\grid\GridView::widget([
+                'dataProvider'=>new \yii\data\ArrayDataProvider(['allModels'=>$model->leftovers,'pagination'=>false]),
+                'layout'=>"{items}",
+                'columns'=>[
+                    'warehouse.title',
+                    'left_in_stock'
+                ]
+            ])?>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title pull-left"><?= Yii::t('robote13/catalog', 'Related products')?></h4>
+            <div class="clearfix"></div>
+        </div>
+        <div class="panel-body">
 
-            </div>
         </div>
+    </div>
 
-        <div class="form-group">
-            <?= Html::submitButton(Yii::t('robote13/catalog', 'Save'), ['class' => 'btn btn-success']) ?>
-        </div>
+    <div class="form-group">
+        <?= Html::submitButton(Yii::t('robote13/catalog', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 

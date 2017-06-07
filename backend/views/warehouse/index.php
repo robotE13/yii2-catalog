@@ -29,7 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttons'=>[
+                    'view' => function ($url,$model,$key){
+                        return Html::a(Html::tag('span','',['class'=>'glyphicon glyphicon-plus']), ['income','id'=>$model->id]);
+                    }
+                ]
+            ],
         ],
     ]); ?>
 </div>

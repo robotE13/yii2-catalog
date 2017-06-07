@@ -10,12 +10,15 @@ use Yii;
  * @property int $warehouse_id
  * @property int $product_id
  * @property int $left_in_stock
+ * @property int $reserved
  *
  * @property Product $product
  * @property Warehouse $warehouse
  */
 class Leftover extends \yii\db\ActiveRecord
 {
+    const SCENARIO_REMAINS = 'remains';
+
     /**
      * @inheritdoc
      */
@@ -30,9 +33,7 @@ class Leftover extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['left_in_stock'], 'required'],
-            [['warehouse_id', 'product_id', 'left_in_stock'], 'integer'],
-            //[['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['warehouse_id'], 'exist', 'skipOnError' => true, 'targetClass' => Warehouse::className(), 'targetAttribute' => ['warehouse_id' => 'id']],
         ];
     }
@@ -46,6 +47,7 @@ class Leftover extends \yii\db\ActiveRecord
             'warehouse_id' => Yii::t('robote13/catalog', 'Warehouse ID'),
             'product_id' => Yii::t('robote13/catalog', 'Product ID'),
             'left_in_stock' => Yii::t('robote13/catalog', 'Left In Stock'),
+            'reserved' => Yii::t('robote13/catalog', 'Reserved'),
         ];
     }
 
@@ -63,6 +65,11 @@ class Leftover extends \yii\db\ActiveRecord
     public function getWarehouse()
     {
         return $this->hasOne(Warehouse::className(), ['id' => 'warehouse_id']);
+    }
+
+    public static function incomeMultiple()
+    {
+
     }
 
     /**

@@ -27,7 +27,7 @@ class TabularForm extends \sidanval\tabular\TabularForm
     {
         $relation = $this->rootModel->getRelation($this->rootModelAttribute);
         $relationCLass = $relation->modelClass;
-        $templateModel = new $relationCLass();
+        $templateModel = Yii::createObject($relationCLass);
         //$templateModelPk = reset($templateModel->primaryKey());
 
         if($this->withRoot) {
@@ -45,7 +45,7 @@ class TabularForm extends \sidanval\tabular\TabularForm
         $parametersData = $data[$formName];
         $this->models = [];
         foreach ($parametersData as $index => $value) {
-            $this->models[$index] = new $relationCLass();
+            $this->models[$index] = Yii::createObject($relationCLass);
         }
         Model::loadMultiple($this->models, Yii::$app->request->post());
 
