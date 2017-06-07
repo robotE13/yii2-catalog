@@ -96,7 +96,8 @@ $redactorSettings = [
                 'layout'=>"{items}",
                 'columns'=>[
                     'warehouse.title',
-                    'left_in_stock'
+                    'left_in_stock',
+                    'reserved'
                 ]
             ])?>
         </div>
