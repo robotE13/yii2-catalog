@@ -1,0 +1,39 @@
+<?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+
+/* @var $this yii\web\View */
+/* @var $searchModel robote13\catalog\forms\SetSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = Yii::t('robote13/catalog', 'Sets');
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="set-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?= Html::a(Yii::t('robote13/catalog', 'Create Set'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
+            'slug_index',
+            'slug',
+            'title',
+            'description:ntext',
+            // 'discount_amount',
+            // 'updated_in',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+</div>

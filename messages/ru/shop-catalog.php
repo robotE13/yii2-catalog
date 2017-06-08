@@ -24,6 +24,7 @@ return[
     'Product types' => 'Типы товаров',
     'Related products' => 'Похожие товары',
     'Slug' => 'Псевдоним для ЧПУ',
+    'Sets' => 'Наборы',
     'Status' => 'Статус',
     'Type ID' => 'Тип товара',
     'Title' => 'Название',
