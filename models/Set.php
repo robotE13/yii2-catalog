@@ -3,6 +3,9 @@
 namespace robote13\catalog\models;
 
 use Yii;
+use robote13\yii2components\behaviors\IndexedStringBehavior;
+use voskobovich\linker\LinkerBehavior;
+use voskobovich\linker\updaters\ManyToManySmartUpdater;
 
 /**
  * This is the model class for table "{{%catalog_set}}".
@@ -11,6 +14,7 @@ use Yii;
  * @property string $slug_index
  * @property string $slug
  * @property string $title
+ * @property string $badge
  * @property string $description
  * @property string $discount_amount
  *
@@ -27,17 +31,47 @@ class Set extends \yii\db\ActiveRecord
         return '{{%catalog_set}}';
     }
 
+    public function behaviors()
+    {
+        return [
+            'indexed'=>[
+                'class'=> IndexedStringBehavior::className(),
+                'attribute' => 'slug',
+                'indexAttribute' => 'slug_index'
+            ],
+            'uploadBehavior' => [
+                'class' => 'vova07\fileapi\behaviors\UploadBehavior',
+                'attributes' => [
+                    'badge' => [
+                        'url' => Yii::getAlias('@web/previews/')
+                    ]
+                ]
+            ],
+            'relationalSave'=>[
+                'class' => LinkerBehavior::className(),
+                'relations' => [
+                    'productsIds'=>[
+                        'products',
+                        'updater'=>[
+                            'class' => ManyToManySmartUpdater::className()
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['slug_index', 'slug', 'title', 'description', 'discount_amount'], 'required'],
+            [['slug', 'title', 'description', 'discount_amount'], 'required'],
+            ['productsIds','each','rule'=>['integer']],
             [['description'], 'string'],
             [['discount_amount'], 'number'],
-            [['slug', 'title'], 'string', 'max' => 255],
-            [['slug_index'], 'unique'],
+            [['slug', 'title'], 'string', 'max' => 255]
         ];
     }
 
@@ -69,7 +103,7 @@ class Set extends \yii\db\ActiveRecord
      */
     public function getProducts()
     {
-        return $this->hasMany(CatalogProduct::className(), ['id' => 'product_id'])->viaTable('{{%set_product}}', ['set_id' => 'id']);
+        return $this->hasMany(Product::className(), ['id' => 'product_id'])->viaTable('{{%set_product}}', ['set_id' => 'id']);
     }
 
     /**

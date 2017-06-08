@@ -85,7 +85,7 @@ $redactorSettings = [
         </div>
     </div>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6])->widget(Redactor::className(),['settings'=>$redactorSettings]) ?>
+    <?= $form->field($model, 'description')->textarea(['rows' => 6])->widget(Redactor::className(),['settings'=>$redactorSettings]);?>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title"><?= Yii::t('robote13/catalog', 'Leftovers')?></h4>
