@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'type_id',
                 'value'=>function($model){return $model->type->title;},
-                'filter'=> robote13\catalog\models\ProductType::dropdownItems('title','id')
+                'filter'=> robote13\catalog\models\ProductType::dropdownItems('id','title')
             ],
             'slug',
             [
