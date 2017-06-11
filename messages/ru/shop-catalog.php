@@ -23,6 +23,7 @@ return[
     'Product details' => 'Подробнее о товаре',
     'Product types' => 'Типы товаров',
     'Related products' => 'Похожие товары',
+    'Reserved' => 'В резерве',
     'Slug' => 'Псевдоним для ЧПУ',
     'Sets' => 'Наборы',
     'Status' => 'Статус',

@@ -86,31 +86,26 @@ $redactorSettings = [
     </div>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6])->widget(Redactor::className(),['settings'=>$redactorSettings]);?>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title"><?= Yii::t('robote13/catalog', 'Leftovers')?></h4>
-        </div>
-        <div class="panel-body">
-            <?=yii\grid\GridView::widget([
-                'dataProvider'=>new \yii\data\ArrayDataProvider(['allModels'=>$model->leftovers,'pagination'=>false]),
-                'layout'=>"{items}",
-                'columns'=>[
-                    'warehouse.title',
-                    'left_in_stock',
-                    'reserved'
-                ]
-            ])?>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title pull-left"><?= Yii::t('robote13/catalog', 'Related products')?></h4>
-            <div class="clearfix"></div>
-        </div>
-        <div class="panel-body">
 
-        </div>
-    </div>
+    <h3><?= Yii::t('robote13/catalog', 'Leftovers')?></h3>
+    <?=yii\grid\GridView::widget([
+        'dataProvider'=>new \yii\data\ArrayDataProvider(['allModels'=>$model->leftovers,'pagination'=>false]),
+        'layout'=>"{items}",
+        'columns'=>[
+            'warehouse.title',
+            'left_in_stock',
+            'reserved'
+        ]
+    ])?>
+
+    <h3><?= Yii::t('robote13/catalog', 'Related products')?></h3>
+    <?= yii\widgets\ListView::widget([
+        'dataProvider'=>new \yii\data\ArrayDataProvider(['allModels'=>$model->related]),
+        'layout'=>"{items}",
+        'options'=>['tag'=>'ul','class'=>'list-group'],
+        'itemView'=>function($model){return $model->title . Html::a("&nbsp;<i class='glyphicon glyphicon-new-window'></i>",['update','id'=>$model->id],['target'=>'_blank']);},
+        'itemOptions'=>['tag'=>'li','class'=>'list-group-item']
+    ])?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('robote13/catalog', 'Save'), ['class' => 'btn btn-success']) ?>
