@@ -13,7 +13,7 @@ use wbraganca\dynamicform\DynamicFormWidget;
 /* @var $this yii\web\View */
 /* @var $model robote13\catalog\models\Warehouse */
 
-$this->title = Yii::t('robote13/catalog', 'Receipts to the warehouse: "{warehouse}" ', ['warehouse' => $model->title,]);
+$this->title = Yii::t('robote13/catalog', '{kind} on the warehouse: "{warehouse}" ', ['kind'=>$operations[0]->typeText,'warehouse' => $model->title]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('robote13/catalog', 'Warehouses'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ])?>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h4 class="panel-title pull-left"><?= Yii::t('robote13/catalog', 'Place goods in the warehouse')?></h4>
+            <h4 class="panel-title pull-left"><?=$operations[0]->typeText?></h4>
             <div class="clearfix"></div>
         </div>
         <div class="panel-body">

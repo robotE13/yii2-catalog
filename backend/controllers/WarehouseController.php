@@ -36,9 +36,15 @@ class WarehouseController extends CrudControllerAbstract
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionIncome($id)
+    /**
+     *
+     * @param int $id warehouse ID
+     * @param int $type operation type @see LeftoverOperation::$types
+     * @return string
+     */
+    public function actionOperation($id,$type)
     {
-        Yii::$container->set(LeftoverOperation::className(),['type'=> LeftoverOperation::TYPE_INCOME]);
+        Yii::$container->set(LeftoverOperation::className(),['type'=>$type]);
         $tabular = Yii::createObject([
             'class'=> TabularForm::className(),
             'withRoot'=>false,
@@ -54,7 +60,7 @@ class WarehouseController extends CrudControllerAbstract
         if ($tabular->load(Yii::$app->request->post()) && $tabular->save()) {
             return $this->redirect(Url::previous("{$this->id}-index"));
         } else {
-            return $this->render('income', [
+            return $this->render('operation', [
                 'model' => $tabular->rootModel,
                 'operations' => $tabular->models
             ]);

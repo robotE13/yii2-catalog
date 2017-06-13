@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use robote13\catalog\models\LeftoverOperation;
 
 /* @var $this yii\web\View */
 /* @var $searchModel robote13\catalog\forms\WarehouseSearch */
@@ -31,9 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => 'yii\grid\ActionColumn',
+                'template'=>"{income} {expense} {update} {delete}",
                 'buttons'=>[
-                    'view' => function ($url,$model,$key){
-                        return Html::a(Html::tag('span','',['class'=>'glyphicon glyphicon-plus']), ['income','id'=>$model->id]);
+                    'income' => function ($url,$model,$key){
+                        return Html::a(Html::tag('span','',['class'=>'glyphicon glyphicon-plus']), ['operation','id'=>$model->id,'type'=> LeftoverOperation::TYPE_INCOME]);
+                    },
+                    'expense' => function ($url,$model,$key){
+                        return Html::a(Html::tag('span','',['class'=>'glyphicon glyphicon-minus']), ['operation','id'=>$model->id,'type'=> LeftoverOperation::TYPE_EXPENSE]);
                     }
                 ]
             ],

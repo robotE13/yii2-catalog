@@ -17,7 +17,7 @@ use Yii;
  */
 class Leftover extends \yii\db\ActiveRecord
 {
-    const SCENARIO_REMAINS = 'remains';
+    const SCENARIO_ENSURE = 'ensure';
 
     /**
      * @inheritdoc
@@ -33,6 +33,7 @@ class Leftover extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['product_id'],'unique','targetAttribute'=>['product_id','warehouse_id'],'on'=>[self::SCENARIO_DEFAULT, self::SCENARIO_ENSURE]],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['warehouse_id'], 'exist', 'skipOnError' => true, 'targetClass' => Warehouse::className(), 'targetAttribute' => ['warehouse_id' => 'id']],
         ];

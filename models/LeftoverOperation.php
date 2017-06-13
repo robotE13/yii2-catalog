@@ -3,6 +3,7 @@
 namespace robote13\catalog\models;
 
 use Yii;
+use yii\validators\Validator;
 
 /**
  * This is the model class for table "{{%leftover_operation}}".
@@ -116,11 +117,14 @@ class LeftoverOperation extends \yii\db\ActiveRecord
     {
         parent::afterSave($insert, $changedAttributes);
         $this->ensureLeftover();
+
         $condition = ['warehouse_id'=> $this->warehouse_id,'product_id'=> $this->product_id];
+        $increment = $this->getIncrement();
         switch ($this->type)
         {
             case static::TYPE_INCOME:
-                Leftover::updateAllCounters(['left_in_stock'=> $this->quantity],$condition);
+            case static::TYPE_EXPENSE:
+                Leftover::updateAllCounters(['left_in_stock'=> $increment],$condition);
                 break;
 
             default:
@@ -133,12 +137,26 @@ class LeftoverOperation extends \yii\db\ActiveRecord
         $model = Yii::createObject([
             'class' => Leftover::className(),
             'warehouse_id'=> $this->warehouse_id,
-            'product_id'=> $this->product_id
+            'product_id'=> $this->product_id,
+            'scenario' => Leftover::SCENARIO_ENSURE
         ]);
-        $validator = \yii\validators\Validator::createValidator('exist', $model,['warehouse_id','product_id']);
-        if(!$validator->validateAttributes($model))
+
+        if($model->validate())
         {
             $model->save(false);
+        }
+    }
+
+    private function getIncrement()
+    {
+        switch ($this->type)
+        {
+            case static::TYPE_EXPENSE:
+            case static::TYPE_CANCEL_RESERVATION:
+                return - $this->quantity;
+
+            default:
+                return $this->quantity;
         }
     }
 
