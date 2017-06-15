@@ -88,6 +88,8 @@ $redactorSettings = [
                 ]
             ]);?>
 
+    <?= $form->field($model, 'status')->dropDownList($model->getStatuses())?>
+
     <?= $form->field($model, 'description')->textarea(['rows' => 6])->widget(Redactor::className(),['settings'=>$redactorSettings]);?>
 
     <?= $form->field($model, 'discount_amount')->textInput(['maxlength' => true]) ?>

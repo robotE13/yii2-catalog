@@ -18,7 +18,7 @@ class SetSearch extends Set
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id','status'], 'integer'],
             [['slug_index', 'slug', 'title', 'description', 'updated_in'], 'safe'],
             [['discount_amount'], 'number'],
         ];

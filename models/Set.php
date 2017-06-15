@@ -15,6 +15,7 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  * @property string $slug
  * @property string $title
  * @property string $badge
+ * @property integer $status
  * @property string $description
  * @property string $discount_amount
  *
@@ -23,6 +24,10 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  */
 class Set extends \yii\db\ActiveRecord
 {
+    const STATUS_ENABLED = 1;
+
+    const STATUS_DISABLED = 2;
+
     /**
      * @inheritdoc
      */
@@ -38,6 +43,12 @@ class Set extends \yii\db\ActiveRecord
                 'class'=> IndexedStringBehavior::className(),
                 'attribute' => 'slug',
                 'indexAttribute' => 'slug_index'
+            ],
+            'statusText'=>[
+                'class'=> \robote13\yii2components\behaviors\TextStatusBehavior::className(),
+                'attributes'=>[
+                    'status'=> self::getStatuses()
+                ]
             ],
             'uploadBehavior' => [
                 'class' => 'vova07\fileapi\behaviors\UploadBehavior',
@@ -69,6 +80,7 @@ class Set extends \yii\db\ActiveRecord
         return [
             [['slug', 'title', 'description', 'discount_amount'], 'required'],
             ['productsIds','each','rule'=>['integer']],
+            ['status','in','range'=> array_keys(self::getStatuses())],
             [['description'], 'string'],
             [['discount_amount'], 'number'],
             [['slug', 'title'], 'string', 'max' => 255]
@@ -104,6 +116,14 @@ class Set extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::className(), ['id' => 'product_id'])->viaTable('{{%set_product}}', ['set_id' => 'id']);
+    }
+
+    public static function getStatuses()
+    {
+        return [
+            static::STATUS_ENABLED => \Yii::t('robote13/catalog','Enabled'),
+            static::STATUS_DISABLED => \Yii::t('robote13/catalog','Disabled'),
+        ];
     }
 
     /**

@@ -26,6 +26,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
+            [
+                'attribute'=>'status',
+                'filter'=> \robote13\catalog\models\Set::getStatuses(),
+                'value'=>'statusText'
+            ],
             'slug',
             'title',
             'discount_amount',
