@@ -121,6 +121,11 @@ class Set extends \yii\db\ActiveRecord
 
     public function getPrice()
     {
+        return $this->oldPrice - $this->discount_amount;
+    }
+
+    public function getOldPrice()
+    {
         $price = 0;
         foreach($this->products as $product)
         {
