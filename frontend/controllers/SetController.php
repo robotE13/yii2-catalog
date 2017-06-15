@@ -17,12 +17,12 @@ class SetController extends \robote13\yii2components\web\FrontendControllerAbstr
 {
     public function getModelClass()
     {
-        return '\robote13\catalog\models\Set';
+        return 'robote13\catalog\models\Set';
     }
 
     public function getSearchClass()
     {
-        return '\robote13\catalog\forms\SetSearch';
+        return 'robote13\catalog\forms\SetSearch';
     }
 
     public function actionView($id)

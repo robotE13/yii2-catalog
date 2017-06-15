@@ -119,6 +119,21 @@ class Set extends \yii\db\ActiveRecord
         return $this->hasMany(Product::className(), ['id' => 'product_id'])->viaTable('{{%set_product}}', ['set_id' => 'id']);
     }
 
+    public function getPrice()
+    {
+        $price = 0;
+        foreach($this->products as $product)
+        {
+            $price += $product->price;
+        }
+        return $price;
+    }
+
+    public function getIsAvailable()
+    {
+        return $this->status == static::STATUS_ENABLED;
+    }
+
     public static function getStatuses()
     {
         return [

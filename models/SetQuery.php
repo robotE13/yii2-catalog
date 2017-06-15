@@ -9,10 +9,10 @@ namespace robote13\catalog\models;
  */
 class SetQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    public function bySlug($slug)
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this->andWhere(['slug_index'=> md5($slug)]);
+    }
 
     /**
      * @inheritdoc
