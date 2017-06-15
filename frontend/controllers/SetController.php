@@ -28,7 +28,7 @@ class SetController extends \robote13\yii2components\web\FrontendControllerAbstr
     public function actionView($id)
     {
         $this->findModelCallback = function ($query,$id){
-            return $query->bySlug($id);
+            return $query->active()->bySlug($id);
         };
         return parent::actionView($id);
     }
