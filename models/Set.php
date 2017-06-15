@@ -97,6 +97,7 @@ class Set extends \yii\db\ActiveRecord
             'slug_index' => Yii::t('robote13/catalog', 'Slug Index'),
             'slug' => Yii::t('robote13/catalog', 'Slug'),
             'title' => Yii::t('robote13/catalog', 'Title'),
+            'status' => Yii::t('robote13/catalog', 'Status'),
             'description' => Yii::t('robote13/catalog', 'Description'),
             'discount_amount' => Yii::t('robote13/catalog', 'Discount Amount'),
         ];

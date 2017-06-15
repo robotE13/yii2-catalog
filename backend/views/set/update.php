@@ -9,7 +9,6 @@ $this->title = Yii::t('robote13/catalog', 'Update {modelClass}: ', [
     'modelClass' => 'Set',
 ]) . $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('robote13/catalog', 'Sets'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('robote13/catalog', 'Update');
 ?>
 <div class="set-update">
