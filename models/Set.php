@@ -16,6 +16,7 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  * @property string $title
  * @property string $badge
  * @property integer $status
+ * @property integer $popularity Description
  * @property string $description
  * @property string $discount_amount
  *
@@ -82,6 +83,7 @@ class Set extends \yii\db\ActiveRecord
             ['productsIds','each','rule'=>['integer']],
             ['status','in','range'=> array_keys(self::getStatuses())],
             [['description'], 'string'],
+            ['popularity','integer'],
             [['discount_amount'], 'number'],
             [['slug', 'title'], 'string', 'max' => 255]
         ];
@@ -98,6 +100,7 @@ class Set extends \yii\db\ActiveRecord
             'slug' => Yii::t('robote13/catalog', 'Slug'),
             'title' => Yii::t('robote13/catalog', 'Title'),
             'status' => Yii::t('robote13/catalog', 'Status'),
+            'popularity' => Yii::t('robote13/catalog', 'Popularity'),
             'description' => Yii::t('robote13/catalog', 'Description'),
             'discount_amount' => Yii::t('robote13/catalog', 'Discount Amount'),
         ];
