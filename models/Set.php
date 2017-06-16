@@ -16,7 +16,7 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  * @property string $title
  * @property string $badge
  * @property integer $status
- * @property integer $popularity Description
+ * @property integer $popularity
  * @property string $description
  * @property string $discount_amount
  *
