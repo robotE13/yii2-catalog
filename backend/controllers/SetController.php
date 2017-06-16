@@ -21,6 +21,16 @@ class SetController extends CrudControllerAbstract
         return 'robote13\catalog\forms\SetSearch';
     }
 
+    public function actions()
+    {
+        return[
+            'update-editable'=>[
+                'class'=> \robote13\yii2components\web\EditableAction::className(),
+                'modelClass'=> \robote13\catalog\models\Set::className()
+            ]
+        ];
+    }
+
     /**
      * Displays a single Set model.
      * @param integer $id
