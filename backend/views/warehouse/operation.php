@@ -47,7 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?=$form->field($operation, "[{$key}]product_id",['options'=>['class'=>'form-group col-xs-7']])->dropDownList(app\modules\catalog\models\Product::dropdownItems('id', 'title'))?>
                     <?=$form->field($operation, "[{$key}]quantity",['options'=>['class'=>'form-group col-xs-2']])?>
                     <div class="col-xs-3 text-center clearfix">
+                        <label class="control-label">&nbsp;</label>
+                        <p>
                         <button type="button" class="remove-item btn btn-danger btn-xs pull-left">Убрать</button>
+                        </p>
                     </div>
                 </div>
                 <?php endforeach; ?>
