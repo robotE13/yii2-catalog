@@ -31,9 +31,16 @@ class WarehouseController extends CrudControllerAbstract
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($warehouse_id)
     {
-        throw new NotFoundHttpException('The requested page does not exist.');
+        $filter = Yii::createObject(\robote13\catalog\forms\LeftoverSearch::className());
+        $dataProvider = $filter->search(Yii::$app->request->get());
+
+        return $this->render('view',[
+            'model'=> $this->findModel($warehouse_id),
+            'filter'=>$filter,
+            'dataProvider'=>$dataProvider
+        ]);
     }
 
     /**

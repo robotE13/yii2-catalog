@@ -32,8 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template'=>"{income} {expense} {update} {delete}",
+                'template'=>"{income} {expense} {view} {update} {delete}",
                 'buttons'=>[
+                    'view' => function ($url,$model,$key){
+                        return Html::a(Html::tag('span','',['class'=>'glyphicon glyphicon-th-list']), ['view','warehouse_id'=>$model->id]);
+                    },
                     'income' => function ($url,$model,$key){
                         return Html::a(Html::tag('span','',['class'=>'glyphicon glyphicon-plus']), ['operation','id'=>$model->id,'type'=> LeftoverOperation::TYPE_INCOME]);
                     },
