@@ -17,6 +17,8 @@ return[
     'Discount Amount' => 'Сумма скидки',
     'Enabled' => 'Включено',
     'In stock' => 'В наличии',
+    'Kits' => 'Комплекты',
+    'Kits for juice' => 'Комплекты для сока',
     'Leftovers' => 'Остатки',
     'Left In Stock' => 'Остаток',
     'Measurement units' => 'Единицы измерения',
