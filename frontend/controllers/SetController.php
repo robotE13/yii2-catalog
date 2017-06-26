@@ -22,6 +22,7 @@ class SetController extends \robote13\yii2components\web\FrontendControllerAbstr
 
     public function getSearchClass()
     {
+        \Yii::$container->set('robote13\catalog\forms\SetSearch',['defaultOrder'=>['popularity'=>SORT_DESC]]);
         return 'robote13\catalog\forms\SetSearch';
     }
 

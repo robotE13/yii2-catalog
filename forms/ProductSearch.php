@@ -12,6 +12,8 @@ use robote13\catalog\models\Product;
  */
 class ProductSearch extends Product
 {
+    public $defaultOrder;
+
     public $kind;
     /**
      * @inheritdoc
@@ -58,11 +60,16 @@ class ProductSearch extends Product
             // $query->where('0=1');
             return $dataProvider;
         }
+
         $dataProvider->getSort()->attributes['popularity']=[
             'asc'=>['popularity'=>SORT_ASC],
             'desc'=>['popularity'=>SORT_DESC],
             'default'=>SORT_DESC
         ];
+
+        $dataProvider->getSort()->defaultOrder = $this->defaultOrder;
+
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,

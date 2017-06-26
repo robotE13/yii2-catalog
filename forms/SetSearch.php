@@ -12,6 +12,8 @@ use robote13\catalog\models\Set;
  */
 class SetSearch extends Set
 {
+    public $defaultOrder;
+    
     /**
      * @inheritdoc
      */
@@ -57,6 +59,8 @@ class SetSearch extends Set
             // $query->where('0=1');
             return $dataProvider;
         }
+
+        $dataProvider->getSort()->defaultOrder = $this->defaultOrder;
 
         // grid filtering conditions
         $query->andFilterWhere([

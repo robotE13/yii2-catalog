@@ -16,6 +16,7 @@ class MainController extends FrontendControllerAbstract
 
     public function getSearchClass()
     {
+        \Yii::$container->set('robote13\catalog\forms\ProductSearch',['defaultOrder'=>['popularity'=>SORT_DESC]]);
         return 'robote13\catalog\forms\ProductSearch';
     }
 
