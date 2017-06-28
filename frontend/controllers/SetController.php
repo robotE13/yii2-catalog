@@ -26,6 +26,15 @@ class SetController extends \robote13\yii2components\web\FrontendControllerAbstr
         return 'robote13\catalog\forms\SetSearch';
     }
 
+    public function init()
+    {
+        parent::init();
+        $this->indexParams = function($filterModel,$dataProvider){
+            $dataProvider->query->active();
+            return ['dataProvider'=>$dataProvider];
+        };
+    }
+
     public function actionView($id)
     {
         $this->findModelCallback = function ($query,$id){
