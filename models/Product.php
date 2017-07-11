@@ -102,6 +102,7 @@ class Product extends \yii\db\ActiveRecord
             [['description','badge'], 'string'],
             [['price'], 'number'],
             [['slug', 'title','vendor_code'], 'string', 'max' => 255],
+            ['vendor_code','unique','skipOnError'=>true],
             ['status','in','range'=> array_keys(static::getStatuses())],
             [['measurement_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => MeasurementUnit::className(), 'targetAttribute' => ['measurement_unit_id' => 'id']],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductType::className(), 'targetAttribute' => ['type_id' => 'id']],
