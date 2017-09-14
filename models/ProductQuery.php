@@ -9,6 +9,10 @@ namespace robote13\catalog\models;
  */
 class ProductQuery extends \yii\db\ActiveQuery
 {
+    /**
+     *
+     * @return ProductQuery
+     */
     public function active()
     {
         return $this->andWhere(['status'=> [Product::STATUS_IN_STOCK, Product::STATUS_NOT_IN_STOCK]]);
