@@ -16,15 +16,17 @@ interface LeftoverUpdaterInterface
 {
     /**
      *
-     * @param [] $items
+     * @param type $items
+     * @param string $message
      */
-    public function reservation($items);
+    public function reservation($items,$message = '');
 
     /**
      *
-     * @param [] $items
+     * @param type $items
+     * @param string $message
      */
-    public function cancelReservation($items);
+    public function cancelReservation($items,$message = '');
 
     /**
      *
