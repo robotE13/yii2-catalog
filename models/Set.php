@@ -21,7 +21,7 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  * @property string $discount_amount
  *
  * @property SetProduct[] $setProducts
- * @property CatalogProduct[] $products
+ * @property Product[] $products
  */
 class Set extends \yii\db\ActiveRecord
 {
@@ -139,7 +139,14 @@ class Set extends \yii\db\ActiveRecord
 
     public function getIsAvailable()
     {
-        return $this->status == static::STATUS_ENABLED;
+        foreach ($this->products as $product)
+        {
+            if(!$product->isAvailable)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static function getStatuses()
