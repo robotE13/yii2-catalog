@@ -10,8 +10,9 @@ use vova07\fileapi\Widget;
 use vova07\imperavi\Widget as Redactor;
 
 /* @var $this yii\web\View */
-/* @var $model robote13\catalog\models\Set */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $module robote13\catalog\Module */
+/* @var $model robote13\catalog\models\Set */
 
 $redactorSettings = [
     'lang'=>'ru',
@@ -35,6 +36,9 @@ $redactorSettings = [
     ],
     'replaceDivs' =>true
 ];
+
+$module = $this->context->module;
+$cropAspectRatio = $module->getCropDimension('width')/$module->getCropDimension('height');
 ?>
 
 <div class="set-form">
@@ -72,17 +76,17 @@ $redactorSettings = [
                     'accept'=>'image/*',
                     'elements'=>[
                         'preview' => [
-                            'width' => 140,
-                            'height' => 200
+                            'width' => 125,
+                            'height' => 125/$cropAspectRatio
                         ],
                     ]
                 ],
                 'crop'=>true,
                 'jcropSettings'=>[
-                    'aspectRatio' => 0.7,
+                    'aspectRatio' => $cropAspectRatio,
                     'bgColor' => '#ffffff',
-                    'maxSize' => [500, 600],
-                    'minSize' => [280, 400],
+                    'maxSize' => [800, 600],
+                    'minSize' => [$module->getCropDimension('width'), $module->getCropDimension('width')],
                     'keySupport' => false, // Important param to hide jCrop radio button.
                     'selection' => '100%'
                 ]
