@@ -36,5 +36,8 @@
         "psr-4": {
             "robote13\\catalog\\": ""
         }
+    },
+    "extra":{
+        "bootstrap": "robote13\\catalog\\Bootstrap"
     }
 }

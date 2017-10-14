@@ -1,14 +1,6 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace robote13\catalog;
-
-use Yii;
 
 /**
  * Description of Bootstrap
@@ -21,7 +13,6 @@ class Bootstrap implements \yii\base\BootstrapInterface
     {
         if($app instanceof \yii\web\Application)
         {
-            Yii::$container->set('sidanval\tabular\TabularForm', components\TabularForm::className());
             if(!isset($app->i18n->translations['robote13/catalog']))
             {
                 $app->i18n->translations['robote13/catalog'] = [

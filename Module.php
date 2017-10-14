@@ -42,6 +42,8 @@ class Module extends \yii\base\Module
      */
     public function init()
     {
+        Yii::$container->set('sidanval\tabular\TabularForm', components\TabularForm::className());
+        
         parent::init();
         $this->initFileAPI();
         $this->setDefaultViewPath();

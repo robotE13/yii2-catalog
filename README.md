@@ -26,7 +26,7 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
-###Подключение модуля:
+### Подключение модуля:
 
 ```php
 'modules' => [
@@ -43,7 +43,7 @@ Usage
     ],
 ],
 ```
-###Настройка хранилища для badge
+### Настройка хранилища для badge
 
 Все операции по работе с хранилищем производятся при помощи абстрактной файловой системы [Flysystem](http://flysystem.thephpleague.com/).
 Для модуля по умолчанию установлено имя компонента файловой системы: `catalogPreviews` (см. `robote13\catalog\Module::previewUploaderOptions`)
