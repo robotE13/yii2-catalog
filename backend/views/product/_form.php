@@ -50,42 +50,56 @@ $cropAspectRatio = $module->getCropDimension('width')/$module->getCropDimension(
     <?php $form = ActiveForm::begin([
         'id'=>'create-product-form'
     ]); ?>
+        <h3><?= Yii::t('robote13/catalog', 'Description')?></h3>
+        <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
             <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'type_id')->dropDownList(ProductType::dropdownItems('id','title')) ?>
-            <?= $form->field($model, 'badge')->widget(Widget::className(),[
-                'settings' => [
-                    'url' => ['main/fileapi-upload'],
-                    'accept'=>'image/*',
-                    'elements'=>[
-                        'preview' => [
-                            'width' => 125,
-                            'height' => 125/$cropAspectRatio
-                        ],
-                    ]
-                ],
-                'crop'=>true,
-                'jcropSettings'=>[
-                    'aspectRatio' => $cropAspectRatio,
-                    'bgColor' => '#ffffff',
-                    'maxSize' => [800, 600],
-                    'minSize' => [$module->getCropDimension('width'), $module->getCropDimension('width')],
-                    'keySupport' => false, // Important param to hide jCrop radio button.
-                    'selection' => '100%'
-                ]
-            ]);?>
-        </div>
-        <div class="col-md-6">
-            <?= $form->field($model, 'categoriesIds')->dropDownList(Category::dropdownItems('id','title'),['multiple'=>true,'size'=>5]) ?>
+
             <div class="row">
-                <?= $form->field($model, 'measurement_unit_id',['options'=>['class'=>'form-group col-sm-4']])->dropDownList(MeasurementUnit::dropdownItems('id','title')) ?>
-                <?= $form->field($model, 'vendor_code',['options'=>['class'=>'form-group col-sm-4']])->textInput(['maxlength' => true]) ?>
-                <?= $form->field($model, 'origin_country',['options'=>['class'=>'form-group col-sm-4']])->textInput(['maxlength' => true]) ?>
-                <?= $form->field($model, 'price',['options'=>['class'=>'form-group col-sm-4']])->textInput(['maxlength' => true]) ?>
-                <?= $form->field($model, 'status',['options'=>['class'=>'form-group col-sm-4']])->dropDownList($model->getStatuses()) ?>
+                <?= $form->field($model, 'price',['options'=>['class'=>'form-group col-sm-6']])->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'measurement_unit_id',['options'=>['class'=>'form-group col-sm-6']])->dropDownList(MeasurementUnit::dropdownItems('id','title')) ?>
+                <?= $form->field($model, 'vendor_code',['options'=>['class'=>'form-group col-sm-6']])->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'origin_country',['options'=>['class'=>'form-group col-sm-6']])->textInput(['maxlength' => true]) ?>
             </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+                <?= $form->field($model, 'type_id',['options'=>['class'=>'form-group col-md-6']])
+                         ->dropDownList(ProductType::dropdownItems('id','title')) ?>
+                <?= $form->field($model, 'status',['options'=>['class'=>'form-group col-md-6']])->dropDownList($model->getStatuses()) ?>
+            </div>
+
+            <?php if($this->context->module->enableCategories):?>
+                <?= $form->field($model, 'categoriesIds')->dropDownList(Category::dropdownItems('id','title'),['multiple'=>true,'size'=>5]) ?>
+            <?php endif;?>
+
+            <?php if($this->context->module->enableBadge):?>
+                <?= $form->field($model, 'badge')->widget(Widget::className(),[
+                    'fileapi'=>$this->context->module->fileapiComponent,
+                    'settings' => [
+                        'url' => ['main/fileapi-upload'],
+                        'accept'=>'image/*',
+                        'elements'=>[
+                            'preview' => [
+                                'width' => 125,
+                                'height' => 125/$cropAspectRatio
+                            ],
+                        ]
+                    ],
+                    'crop'=>true,
+                    'jcropSettings'=>[
+                        'aspectRatio' => $cropAspectRatio,
+                        'bgColor' => '#ffffff',
+                        'maxSize' => [750, 600],
+                        'minSize' => [$module->getCropDimension('width'), $module->getCropDimension('width')],
+                        'keySupport' => false, // Important param to hide jCrop radio button.
+                        'selection' => '100%'
+                    ]
+                ]);?>
+            <?php endif;?>
         </div>
     </div>
 

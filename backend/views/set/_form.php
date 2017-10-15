@@ -70,7 +70,9 @@ $cropAspectRatio = $module->getCropDimension('width')/$module->getCropDimension(
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'badge')->widget(Widget::className(),[
+    <?php if($this->context->module->enableBadge):?>
+        <?= $form->field($model, 'badge')->widget(Widget::className(),[
+                'fileapi'=>$this->context->module->fileapiComponent,
                 'settings' => [
                     'url' => ['main/fileapi-upload'],
                     'accept'=>'image/*',
@@ -91,6 +93,7 @@ $cropAspectRatio = $module->getCropDimension('width')/$module->getCropDimension(
                     'selection' => '100%'
                 ]
             ]);?>
+    <?php endif;?>
 
     <?= $form->field($model, 'status')->dropDownList($model->getStatuses())?>
 

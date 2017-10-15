@@ -3,6 +3,7 @@
 namespace robote13\catalog;
 
 use Yii;
+use yii\base\Event;
 use yii\helpers\ArrayHelper;
 use vova07\fileapi\FileAPI;
 
@@ -20,6 +21,21 @@ class Module extends \yii\base\Module
      * @inheritdoc
      */
     public $controllerNamespace = 'robote13\catalog\frontend\controllers';
+
+    /**
+     * @var string
+     */
+    public $fileapiComponent = 'fileapis';
+
+    /**
+     * @var boolean
+     */
+    public $enableBadge = true;
+
+    /**
+     * @var boolean
+     */
+    public $enableCategories = true;
 
     /**
      * @var array default FileAPI component settings
@@ -43,7 +59,7 @@ class Module extends \yii\base\Module
     public function init()
     {
         Yii::$container->set('sidanval\tabular\TabularForm', components\TabularForm::className());
-        
+
         parent::init();
         $this->initFileAPI();
         $this->setDefaultViewPath();
@@ -80,6 +96,20 @@ class Module extends \yii\base\Module
     }
 
     private function initFileAPI(){
-        Yii::$container->set('fileapi', array_merge($this->previewUploaderOptions,['class' => FileAPI::className()]));
+        if($this->enableBadge)
+        {
+            Yii::$container->setSingleton($this->fileapiComponent, array_merge($this->previewUploaderOptions,['class' => FileAPI::className()]));
+            Event::on(models\ProductBase::className(), models\ProductBase::EVENT_INIT,function($event){
+                    $event->sender->attachBehavior('uploadBehavior',[
+                    'class' => 'vova07\fileapi\behaviors\UploadBehavior',
+                    'fileapi' => $this->fileapiComponent,
+                    'attributes' => [
+                        'badge' => [
+                            'url' => Yii::getAlias('@web/previews/')
+                        ]
+                    ]
+                ]);
+            });
+        }
     }
 }

@@ -15,6 +15,7 @@ class MainController extends Controller
         return[
             'fileapi-upload' => [
                 'class' => FileAPIUpload::className(),
+                'fileapi'=> $this->module->fileapiComponent
             ],
         ];
     }

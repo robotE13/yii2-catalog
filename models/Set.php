@@ -39,38 +39,20 @@ class Set extends \yii\db\ActiveRecord
 
     public function behaviors()
     {
-        return [
-            'indexed'=>[
-                'class'=> IndexedStringBehavior::className(),
-                'attribute' => 'slug',
-                'indexAttribute' => 'slug_index'
-            ],
-            'statusText'=>[
-                'class'=> \robote13\yii2components\behaviors\TextStatusBehavior::className(),
-                'attributes'=>[
-                    'status'=> self::getStatuses()
-                ]
-            ],
-            'uploadBehavior' => [
-                'class' => 'vova07\fileapi\behaviors\UploadBehavior',
-                'attributes' => [
-                    'badge' => [
-                        'url' => Yii::getAlias('@web/previews/')
-                    ]
-                ]
-            ],
-            'relationalSave'=>[
-                'class' => LinkerBehavior::className(),
-                'relations' => [
-                    'productsIds'=>[
-                        'products',
-                        'updater'=>[
-                            'class' => ManyToManySmartUpdater::className()
-                        ]
+        $behaviors = parent::behaviors();
+
+        $behaviors['relationalSave']=[
+            'class' => LinkerBehavior::className(),
+            'relations' => [
+                'productsIds'=>[
+                    'products',
+                    'updater'=>[
+                        'class' => ManyToManySmartUpdater::className()
                     ]
                 ]
             ]
         ];
+        return $behaviors;
     }
 
     /**

@@ -38,7 +38,7 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  * @property SetProduct[] $setProducts
  * @property Warehouse[] $warehouses
  */
-class Product extends \yii\db\ActiveRecord
+class Product extends ProductBase
 {
 
     const STATUS_ARCHIVE = 4;
@@ -56,38 +56,20 @@ class Product extends \yii\db\ActiveRecord
 
     public function behaviors()
     {
-        return [
-            'indexed'=>[
-                'class'=> IndexedStringBehavior::className(),
-                'attribute' => 'slug',
-                'indexAttribute' => 'slug_index'
-            ],
-            'uploadBehavior' => [
-                'class' => 'vova07\fileapi\behaviors\UploadBehavior',
-                'attributes' => [
-                    'badge' => [
-                        'url' => Yii::getAlias('@web/previews/')
-                    ]
-                ]
-            ],
-            'textStatus'=>[
-                'class'=> TextStatusBehavior::className(),
-                'attributes'=>[
-                    'status'=> static::getStatuses()
-                ]
-            ],
-            'relationalSave'=>[
-                'class' => LinkerBehavior::className(),
-                'relations' => [
-                    'categoriesIds'=>[
-                        'categories',
-                        'updater'=>[
-                            'class' => ManyToManySmartUpdater::className()
-                        ]
+        $behaviors = parent::behaviors();
+        
+        $behaviors['relationalSave']=[
+            'class' => LinkerBehavior::className(),
+            'relations' => [
+                'categoriesIds'=>[
+                    'categories',
+                    'updater'=>[
+                        'class' => ManyToManySmartUpdater::className()
                     ]
                 ]
             ]
         ];
+        return $behaviors;
     }
 
     /**
