@@ -3,6 +3,11 @@ Product catalog. Yii2 module
 Catalog of products for online store. Prices, sets, leftovers in the warehouse. 
 In the module, the "Class Table Inheritance" design pattern is used to represent the different categories of products.
 
+Upgrade
+-------
+
+At the moment the package is in the initial stage of development. When updating, carefully read the file CHANGELOG.md
+
 Installation
 ------------
 
@@ -11,13 +16,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist robote13/yii2-catalog "*"
+php composer.phar require --prefer-dist robote13/yii2-catalog "^0.3.0"
 ```
 
 or add
 
 ```
-"robote13/yii2-catalog": "*"
+"robote13/yii2-catalog": "^0.3.0"
 ```
 
 to the require section of your `composer.json` file.

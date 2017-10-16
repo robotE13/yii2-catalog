@@ -3,10 +3,6 @@
 namespace robote13\catalog\models;
 
 use Yii;
-use robote13\yii2components\behaviors\IndexedStringBehavior;
-use robote13\yii2components\behaviors\TextStatusBehavior;
-use voskobovich\linker\LinkerBehavior;
-use voskobovich\linker\updaters\ManyToManySmartUpdater;
 
 /**
  * This is the model class for table "{{%catalog_product}}".
@@ -28,8 +24,6 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  *
  * @property string $textStatus
  * @property-read boolean $isAvailable
- * @property Category[] $categories
- * @property CategoryProduct[] $categoryProducts
  * @property Leftover[] $leftovers
  * @property MeasurementUnit $measurementUnit
  * @property ProductType $type
@@ -54,24 +48,6 @@ class Product extends ProductBase
         return '{{%catalog_product}}';
     }
 
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        
-        $behaviors['relationalSave']=[
-            'class' => LinkerBehavior::className(),
-            'relations' => [
-                'categoriesIds'=>[
-                    'categories',
-                    'updater'=>[
-                        'class' => ManyToManySmartUpdater::className()
-                    ]
-                ]
-            ]
-        ];
-        return $behaviors;
-    }
-
     /**
      * @inheritdoc
      */
@@ -79,7 +55,6 @@ class Product extends ProductBase
     {
         return [
             [['type_id','slug','vendor_code', 'title', 'description', 'measurement_unit_id', 'price','origin_country'], 'required'],
-            ['categoriesIds','each','rule'=>['integer']],
             [['type_id', 'measurement_unit_id','popularity'], 'integer'],
             [['description','badge'], 'string'],
             [['price'], 'number'],
@@ -109,7 +84,6 @@ class Product extends ProductBase
         return [
             'id' => Yii::t('robote13/catalog', 'ID'),
             'type_id' => Yii::t('robote13/catalog', 'Type ID'),
-            'categoriesIds' => Yii::t('robote13/catalog', 'Belongs to categories'),
             'slug_index' => Yii::t('robote13/catalog', 'Slug Index'),
             'slug' => Yii::t('robote13/catalog', 'Slug'),
             'title' => Yii::t('robote13/catalog', 'Title'),
@@ -151,22 +125,6 @@ class Product extends ProductBase
     public function getType()
     {
         return $this->hasOne(ProductType::className(), ['id' => 'type_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCategoryProducts()
-    {
-        return $this->hasMany(CategoryProduct::className(), ['product_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCategories()
-    {
-        return $this->hasMany(Category::className(), ['id' => 'category_id'])->via('categoryProducts');
     }
 
     /**

@@ -71,11 +71,7 @@ $cropAspectRatio = $module->getCropDimension('width')/$module->getCropDimension(
                          ->dropDownList(ProductType::dropdownItems('id','title')) ?>
                 <?= $form->field($model, 'status',['options'=>['class'=>'form-group col-md-6']])->dropDownList($model->getStatuses()) ?>
             </div>
-
-            <?php if($this->context->module->enableCategories):?>
-                <?= $form->field($model, 'categoriesIds')->dropDownList(Category::dropdownItems('id','title'),['multiple'=>true,'size'=>5]) ?>
-            <?php endif;?>
-
+            
             <?php if($this->context->module->enableBadge):?>
                 <?= $form->field($model, 'badge')->widget(Widget::className(),[
                     'fileapi'=>$this->context->module->fileapiComponent,

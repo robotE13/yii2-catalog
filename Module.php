@@ -33,11 +33,6 @@ class Module extends \yii\base\Module
     public $enableBadge = true;
 
     /**
-     * @var boolean
-     */
-    public $enableCategories = true;
-
-    /**
      * @var array default FileAPI component settings
      * @see FileAPI
      */

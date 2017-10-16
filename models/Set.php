@@ -3,7 +3,6 @@
 namespace robote13\catalog\models;
 
 use Yii;
-use robote13\yii2components\behaviors\IndexedStringBehavior;
 use voskobovich\linker\LinkerBehavior;
 use voskobovich\linker\updaters\ManyToManySmartUpdater;
 
@@ -23,7 +22,7 @@ use voskobovich\linker\updaters\ManyToManySmartUpdater;
  * @property SetProduct[] $setProducts
  * @property Product[] $products
  */
-class Set extends \yii\db\ActiveRecord
+class Set extends ProductBase
 {
     const STATUS_ENABLED = 1;
 

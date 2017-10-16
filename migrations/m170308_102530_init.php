@@ -6,19 +6,6 @@ class m170308_102530_init extends Migration
 {
     public function up()
     {
-        // Categories
-        $this->createTable("{{%catalog_category}}",[
-            'id'=> $this->primaryKey(),
-            'slug_index'=> $this->char(32)->notNull(),
-            'slug'=> $this->string()->notNull(),
-            'title'=> $this->string()->notNull(),
-            'tree' => $this->integer()->notNull(),
-            'lft' => $this->integer()->notNull(),
-            'rgt' => $this->integer()->notNull(),
-            'depth' => $this->integer()->notNull()
-        ], $this->tableOptions);
-        $this->createIndex("category_slug_idx","{{%catalog_category}}",['slug_index'],true);
-
         // Warehouses
         $this->createTable("{{%catalog_warehouse}}",[
             'id'=> $this->primaryKey(),
@@ -96,17 +83,6 @@ class m170308_102530_init extends Migration
         $this->addForeignKey('leftover', "{{%leftover}}", 'warehouse_id', "{{%catalog_warehouse}}", 'id', 'CASCADE', 'CASCADE');
         $this->addForeignKey('product_warehouse', "{{%leftover}}", 'product_id', "{{%catalog_product}}", 'id', 'CASCADE', 'CASCADE');
 
-        // Product <--> Categories
-        $this->createTable("{{%category_product}}", [
-            'category_id'=> $this->integer()->notNull(),
-            'product_id' => $this->integer()->notNull(),
-        ], $this->tableOptions);
-        $this->addPrimaryKey('', "{{%category_product}}",['category_id','product_id']);
-        $this->createIndex('fk_category_product_idx', "{{%category_product}}", 'category_id');
-        $this->createIndex('fk_product_category_idx', "{{%category_product}}", 'product_id');
-        $this->addForeignKey('category_product', "{{%category_product}}", 'category_id', "{{%catalog_category}}", 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('product_category', "{{%category_product}}", 'product_id', "{{%catalog_product}}", 'id', 'CASCADE', 'CASCADE');
-
         // Product <--> Sets
         $this->createTable("{{%set_product}}", [
             'set_id'=> $this->integer()->notNull(),
@@ -122,7 +98,6 @@ class m170308_102530_init extends Migration
     public function down()
     {
         $this->dropTable("{{%set_product}}");
-        $this->dropTable("{{%category_product}}");
         $this->dropTable("{{%warehouse_product}}");
         $this->dropTable("{{%type_characteristic}}");
         $this->dropTable("{{%catalog_product}}");
@@ -130,6 +105,5 @@ class m170308_102530_init extends Migration
         $this->dropTable("{{%product_type}}");
         $this->dropTable("{{%catalog_set}}");
         $this->dropTable("{{%catalog_warehouse}}");
-        $this->dropTable("{{%catalog_category}}");
     }
 }
