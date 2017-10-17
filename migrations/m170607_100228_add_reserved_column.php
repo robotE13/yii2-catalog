@@ -1,6 +1,6 @@
 <?php
 
-use app\migrations\Migration;
+use yii\db\Migration;
 
 class m170607_100228_add_reserved_column extends Migration
 {

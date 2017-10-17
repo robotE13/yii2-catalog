@@ -1,6 +1,6 @@
 <?php
 
-use app\migrations\Migration;
+use yii\db\Migration;
 
 class m170501_190121_add_popularity_column extends Migration
 {

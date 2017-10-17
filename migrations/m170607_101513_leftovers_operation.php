@@ -1,6 +1,6 @@
 <?php
 
-use app\migrations\Migration;
+use robote13\yii2components\migrations\Migration;
 
 class m170607_101513_leftovers_operation extends Migration
 {

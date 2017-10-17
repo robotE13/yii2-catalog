@@ -1,6 +1,6 @@
 <?php
 
-use app\migrations\Migration;
+use yii\db\Migration;
 
 class m170615_090145_add_status_to_products_set extends Migration
 {

@@ -1,6 +1,6 @@
 <?php
 
-use app\migrations\Migration;
+use yii\db\Migration;
 
 class m170608_164345_set_badge extends Migration
 {
