@@ -53,7 +53,7 @@ class ProductType extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('robote13/catalog', 'ID'),
             'title' => Yii::t('robote13/catalog', 'Title'),
-            'table' => Yii::t('robote13/catalog', 'Alias'),
+            'table' => Yii::t('robote13/catalog', 'Table'),
         ];
     }
 

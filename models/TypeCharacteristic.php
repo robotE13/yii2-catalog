@@ -3,6 +3,8 @@
 namespace robote13\catalog\models;
 
 use Yii;
+use yii\helpers\Json;
+use robote13\catalog\forms\EnumerableItem;
 
 /**
  * This is the model class for table "{{%type_characteristic}}".
@@ -12,11 +14,19 @@ use Yii;
  * @property string $label
  * @property integer $data_type
  * @property int $type_id
+ * @property \robote13\catalog\forms\EnumerableItem[] $items enumerable items for the attribute if data_type is self::TYPE_ENUMERABLE
  *
  * @property ProductType $type
  */
 class TypeCharacteristic extends \yii\db\ActiveRecord
 {
+    const TYPE_STRING = 1;
+    const TYPE_TEXT = 2;
+    const TYPE_INT = 3;
+    const TYPE_DECIMAL = 4;
+    const TYPE_ENUMERABLE = 5;
+
+
     /**
      * @inheritdoc
      */
@@ -59,5 +69,30 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
     public function getType()
     {
         return $this->hasOne(ProductType::className(), ['id' => 'type_id']);
+    }
+
+    public function afterFind()
+    {
+        parent::afterFind();
+        foreach (Json::decode($this->items) as $item)
+        {
+            $this->items[] = new EnumerableItem([
+                'key'=>$item['key'],
+                'value'=>$item['value']
+            ]);
+        }
+    }
+
+    public function beforeSave($insert)
+    {
+        if(!parent::beforeSave($insert))
+            return false;
+
+        $this->items = $this->data_type == static::TYPE_ENUMERABLE ?
+                       Json::encode(array_reduce($this->items,function($carry,$item){
+                           $carry[$item->key] = $item->value;
+                           return $carry;
+                       },[])) :  null;
+        return true;
     }
 }
