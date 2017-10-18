@@ -1,7 +1,7 @@
 Product catalog. Yii2 module
 ============================
 Catalog of products for online store. Prices, sets, leftovers in the warehouse. 
-In the module, the "Class Table Inheritance" design pattern is used to represent the different categories of products.
+In the module, the "Class Table Inheritance" design pattern is used to represent the different types of products.
 
 Upgrade
 -------

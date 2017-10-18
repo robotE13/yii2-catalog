@@ -3,6 +3,7 @@
 namespace robote13\catalog\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%catalog_product}}".
@@ -116,7 +117,14 @@ class Product extends ProductBase
 
     public function getDynamicAttributes()
     {
-        return $this->hasOne(DynamicAttributes::className(),['product_id'=>'id']);
+        DynamicAttributes::$table = $this->getDynamicTableName();
+        return $this->hasOne(DynamicAttributes::className(),['product_id'=>'id'])->inverseOf('product');
+    }
+
+    public function getDynamicTableName()
+    {
+        $tableName = ArrayHelper::getValue($this->type,'table');
+        return "{{%p_{$tableName}}}";
     }
 
     /**
@@ -125,6 +133,14 @@ class Product extends ProductBase
     public function getType()
     {
         return $this->hasOne(ProductType::className(), ['id' => 'type_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCharacteristics()
+    {
+        return $this->hasMany(TypeCharacteristic::className(), ['type_id' => 'id'])->via('type');
     }
 
     /**

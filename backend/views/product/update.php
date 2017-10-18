@@ -9,11 +9,10 @@ use yii\helpers\Html;
 $this->title = Yii::t('robote13/catalog', 'Update product: {product}', ['product' => $model->title]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('robote13/catalog', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$attributes = $model->dynamicAttributes
 ?>
 <div class="product-update">
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <?= $this->render('_form', compact('model','attributes')) ?>
 
 </div>

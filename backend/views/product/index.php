@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             [
                 'attribute'=>'type_id',
-                'value'=>function($model){return $model->type->title;},
+                'value'=>function($model){return yii\helpers\ArrayHelper::getValue($model->type,'title');},
                 'filter'=> robote13\catalog\models\ProductType::dropdownItems('id','title')
             ],
             'slug',

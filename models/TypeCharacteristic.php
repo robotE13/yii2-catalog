@@ -74,12 +74,17 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
     public function afterFind()
     {
         parent::afterFind();
-        foreach (Json::decode($this->items) as $item)
+        if(isset($this->items))
         {
-            $this->items[] = new EnumerableItem([
-                'key'=>$item['key'],
-                'value'=>$item['value']
-            ]);
+            $items = [];
+            foreach (Json::decode($this->items) as $key => $item)
+            {
+                array_push($items, new EnumerableItem([
+                    'key'=>$key,
+                    'value'=>$item
+                ]));
+            }
+            $this->items = $items;
         }
     }
 
@@ -94,5 +99,27 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
                            return $carry;
                        },[])) :  null;
         return true;
+    }
+
+    /**
+     *
+     * @param \yii\widgets\ActiveForm $form
+     */
+    public function field($form,$model)
+    {
+        $field = $form->field($model, $this->attribute);
+        switch ($this->data_type)
+        {
+            case static::TYPE_STRING:
+            case static::TYPE_INT:
+            case static::TYPE_DECIMAL:
+                return $field->textInput();
+            case static::TYPE_TEXT:
+                return $field->textarea();
+            case static::TYPE_ENUMERABLE:
+                return $field->dropDownList(\yii\helpers\ArrayHelper::map($this->items, 'key', 'value'));
+            default:
+                return $field->textInput();
+        }
     }
 }

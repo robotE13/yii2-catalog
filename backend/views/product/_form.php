@@ -60,8 +60,6 @@ $cropAspectRatio = $module->getCropDimension('width')/$module->getCropDimension(
             <div class="row">
                 <?= $form->field($model, 'price',['options'=>['class'=>'form-group col-sm-6']])->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'measurement_unit_id',['options'=>['class'=>'form-group col-sm-6']])->dropDownList(MeasurementUnit::dropdownItems('id','title')) ?>
-                <?= $form->field($model, 'vendor_code',['options'=>['class'=>'form-group col-sm-6']])->textInput(['maxlength' => true]) ?>
-                <?= $form->field($model, 'origin_country',['options'=>['class'=>'form-group col-sm-6']])->textInput(['maxlength' => true]) ?>
             </div>
         </div>
 
@@ -70,36 +68,43 @@ $cropAspectRatio = $module->getCropDimension('width')/$module->getCropDimension(
                 <?= $form->field($model, 'type_id',['options'=>['class'=>'form-group col-md-6']])
                          ->dropDownList(ProductType::dropdownItems('id','title')) ?>
                 <?= $form->field($model, 'status',['options'=>['class'=>'form-group col-md-6']])->dropDownList($model->getStatuses()) ?>
+                <?= $form->field($model, 'vendor_code',['options'=>['class'=>'form-group col-sm-6']])->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'origin_country',['options'=>['class'=>'form-group col-sm-6']])->textInput(['maxlength' => true]) ?>
             </div>
-            
-            <?php if($this->context->module->enableBadge):?>
-                <?= $form->field($model, 'badge')->widget(Widget::className(),[
-                    'fileapi'=>$this->context->module->fileapiComponent,
-                    'settings' => [
-                        'url' => ['main/fileapi-upload'],
-                        'accept'=>'image/*',
-                        'elements'=>[
-                            'preview' => [
-                                'width' => 125,
-                                'height' => 125/$cropAspectRatio
-                            ],
-                        ]
-                    ],
-                    'crop'=>true,
-                    'jcropSettings'=>[
-                        'aspectRatio' => $cropAspectRatio,
-                        'bgColor' => '#ffffff',
-                        'maxSize' => [750, 600],
-                        'minSize' => [$module->getCropDimension('width'), $module->getCropDimension('width')],
-                        'keySupport' => false, // Important param to hide jCrop radio button.
-                        'selection' => '100%'
-                    ]
-                ]);?>
-            <?php endif;?>
         </div>
     </div>
+    <?php if($this->context->module->enableBadge):?>
+        <?= $form->field($model, 'badge')->widget(Widget::className(),[
+            'fileapi'=>$this->context->module->fileapiComponent,
+            'settings' => [
+                'url' => ['main/fileapi-upload'],
+                'accept'=>'image/*',
+                'elements'=>[
+                    'preview' => [
+                        'width' => 125,
+                        'height' => 125/$cropAspectRatio
+                    ],
+                ]
+            ],
+            'crop'=>true,
+            'jcropSettings'=>[
+                'aspectRatio' => $cropAspectRatio,
+                'bgColor' => '#ffffff',
+                'maxSize' => [750, 600],
+                'minSize' => [$module->getCropDimension('width'), $module->getCropDimension('width')],
+                'keySupport' => false, // Important param to hide jCrop radio button.
+                'selection' => '100%'
+            ]
+        ]);?>
+    <?php endif;?>
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6])->widget(Redactor::className(),['settings'=>$redactorSettings]);?>
+
+        <?php foreach ($model->characteristics as $characteristic) :
+            echo $characteristic->field($form,$attributes);
+        endforeach;
+
+    ?>
 
     <h3><?= Yii::t('robote13/catalog', 'Leftovers')?></h3>
     <?=yii\grid\GridView::widget([
