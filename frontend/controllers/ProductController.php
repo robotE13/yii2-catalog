@@ -7,7 +7,7 @@ use robote13\yii2components\web\FrontendControllerAbstract;
 /**
  * Default controller for the `shop-catalog` module
  */
-class MainController extends FrontendControllerAbstract
+class ProductController extends FrontendControllerAbstract
 {
     public function getModelClass()
     {
