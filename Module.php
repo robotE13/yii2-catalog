@@ -15,7 +15,7 @@ class Module extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public $defaultRoute = 'main';
+    public $defaultRoute = 'product';
 
     /**
      * @inheritdoc
@@ -25,7 +25,7 @@ class Module extends \yii\base\Module
     /**
      * @var string
      */
-    public $fileapiComponent = 'fileapis';
+    public $fileapiComponent = 'fileapi';
 
     /**
      * @var boolean
