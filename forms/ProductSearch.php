@@ -22,7 +22,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'type_id', 'measurement_unit_id', 'status'], 'integer'],
-            [['slug', 'title','kind', 'description','vendor_code'], 'string'],
+            [['slug', /*'title',*/'kind','vendor_code'], 'string'],
             [['price'], 'number'],
         ];
     }
@@ -45,7 +45,8 @@ class ProductSearch extends Product
      */
     public function search($params)
     {
-        $query = Product::find();
+        $class = Yii::$container->get(Product::className())->className();
+        $query = $class::find();
 
         // add conditions that should always apply here
 
@@ -79,10 +80,10 @@ class ProductSearch extends Product
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
+        $query
+            //->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'vendor_code', $this->vendor_code])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'vendor_code', $this->vendor_code]);
 
         $this->andFilterKind($query);
 

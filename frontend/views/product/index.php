@@ -16,12 +16,13 @@ use yii\helpers\Html;
     </p>
     <?=yii\widgets\ListView::widget([
         'dataProvider' => $dataProvider,
-        'itemView' => function($model){return '<section>'
-                                        . Html::tag('h2', $model->title)
-                                        . $model->description
-                                        . Html::a(Yii::t('robote13/catalog','Details'),['main/view','id'=>$model->slug])
-                                        . '<section>';
-                                    }
+        'itemView' => function($model){
+            return '<section>'
+                . Html::tag('h2', $model->title)
+                . $model->description
+                . Html::a(Yii::t('robote13/catalog','Details'),['product/view','kind'=>$model->type->kind,'id'=>$model->slug])
+                . '<section>';
+            }
     ])?>
     <p>
         You may customize this page by editing the following file:<br>

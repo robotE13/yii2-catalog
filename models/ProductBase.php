@@ -25,7 +25,7 @@ class ProductBase extends \yii\db\ActiveRecord
                 'attributes'=>[
                     'status'=> static::getStatuses()
                 ]
-            ],
+            ]
         ];
     }
 }

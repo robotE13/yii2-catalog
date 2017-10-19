@@ -11,6 +11,7 @@ use Yii;
  * @property string $title
  * @property string $table
  *
+ * @property-read string $kind Description
  * @property Product[] $catalogProducts
  * @property TypeCharacteristic[] $typeCharacteristics
  */
@@ -55,6 +56,11 @@ class ProductType extends \yii\db\ActiveRecord
             'title' => Yii::t('robote13/catalog', 'Title'),
             'table' => Yii::t('robote13/catalog', 'Table'),
         ];
+    }
+
+    public function getKind()
+    {
+        return str_replace('_','-', $this->table);
     }
 
     /**
