@@ -1,3 +1,9 @@
+754a3954ac39874d1b6b00cae089b482f0b0c670
+------
+default route = 'product'
+renamed frontend/controllers/MainController -> frontend/controllers/ProductController
+removed backend/controllers/MainController
+
 0.3.0
 -----
 Since the organization of the tree structure of the "Categories" pages does not applicable to the catalog directly,
