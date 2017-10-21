@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use robote13\catalog\models\Category;
 use robote13\catalog\models\ProductType;
 use robote13\catalog\models\MeasurementUnit;
 use vova07\fileapi\Widget;

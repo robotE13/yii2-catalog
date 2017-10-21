@@ -41,7 +41,7 @@ class ProductSearch extends Product
      *
      * @param array $params
      *
-     * @return ActiveDataProvider
+     * @return \yii\data\ActiveDataProvider
      */
     public function search($params)
     {
