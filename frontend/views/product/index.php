@@ -8,7 +8,7 @@ use yii\helpers\Html;
 
 ?>
 <div class="shop-catalog-default-index">
-    <h1><?= $searchModel->kind ?></h1>
+    <h1><?= $searchModel->productKind ?></h1>
     <p>
         This is the view content for action "<?= $this->context->action->id ?>".
         The action belongs to the controller "<?= get_class($this->context) ?>"

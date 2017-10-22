@@ -3,37 +3,32 @@
 namespace robote13\catalog\forms;
 
 use Yii;
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use robote13\catalog\models\Product;
+use robote13\catalog\models\ProductType;
+use robote13\catalog\models\TypeCharacteristic;
 
 /**
  * ProductSearch represents the model behind the search form of `robote13\catalog\models\Product`.
+ *
+ * @property string $productKind
  */
-class ProductSearch extends Product
+class ProductSearch extends \yii\base\DynamicModel
 {
     public $defaultOrder;
 
-    public $kind;
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['id', 'type_id', 'measurement_unit_id', 'status'], 'integer'],
-            [['slug', /*'title',*/'kind','vendor_code'], 'string'],
-            [['price'], 'number'],
-        ];
-    }
+    private $_kind;
 
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
+    private $type_id;
+
+    public function __construct(array $attributes = array(), $config = array())
     {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        parent::__construct(array_fill_keys(['id', 'status','slug', 'title', 'vendor_code','price'],null), $config);
+        $this->addRule(['id', 'status'],'integer')
+                ->addRule(['slug', 'title', 'productKind', 'vendor_code'], 'string')
+                ->addRule(['price'], 'number');
+
+        $this->addDynamicAttributes();
     }
 
     /**
@@ -67,43 +62,65 @@ class ProductSearch extends Product
             'desc'=>['popularity'=>SORT_DESC],
             'default'=>SORT_DESC
         ];
+        $dataProvider->getSort()->attributes['productKind']=[
+            'asc'=>['type.title'=>SORT_ASC],
+            'desc'=>['type.title'=>SORT_DESC],
+            'default'=>SORT_DESC
+        ];
 
         $dataProvider->getSort()->defaultOrder = $this->defaultOrder;
-
 
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'type_id' => $this->type_id,
-            'measurement_unit_id' => $this->measurement_unit_id,
             'price' => $this->price,
             'status' => $this->status,
         ]);
 
-        $query
-            //->andFilterWhere(['like', 'title', $this->title])
+        $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'vendor_code', $this->vendor_code]);
 
-        $this->andFilterKind($query);
-
         return $dataProvider;
-    }
-
-    /**
-     *
-     * @param \robote13\catalog\models\ProductQuery $query
-     */
-    protected function andFilterKind(&$query)
-    {
-        if($this->kind)
-        {
-            $query->typeAlias($this->kind);
-        }
     }
 
     public function formName()
     {
         return '';
     }
+
+    public function getProductKind()
+    {
+        return $this->_kind;
+    }
+
+    public function setProductKind($kind)
+    {
+        $this->type_id = ProductType::find()->select('id')->where(['table'=> str_replace('-','_',$kind)])->scalar();
+        if(!$this->type_id)
+        {
+            $this->type_id = null;
+        }
+        $this->_kind = $kind;
+    }
+
+    private function addDynamicAttributes()
+    {
+        if(!isset($this->type_id))
+            return false;
+
+        $rules = [];
+        $attributes = TypeCharacteristic::find()->where(['type_id'=> $this->type_id])->all();
+        foreach ($attributes as $attribute)
+        {
+            $this->defineAttribute($attribute->attribute);
+            $rules[$attribute->validator][]=$attribute->attribute;
+        }
+        foreach ($rules as $rule => $attrNames)
+        {
+            $this->addRule($attrNames, $rule);
+        }
+    }
+
 }

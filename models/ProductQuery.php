@@ -18,16 +18,9 @@ class ProductQuery extends \yii\db\ActiveQuery
         return $this->andWhere(['status'=> [Product::STATUS_IN_STOCK, Product::STATUS_NOT_IN_STOCK]]);
     }
 
-    public function type($type)
+    public function typeId($typeId)
     {
-        DynamicAttributes::$table = ProductType::find()->select('table')->where(['id'=>$type])->scalar();
-        return $this->andWhere(['type_id'=>$type]);
-    }
-
-    public function typeAlias($type)
-    {
-        DynamicAttributes::$table = $type;
-        return $this->andWhere(['type_id'=>ProductType::find()->select('id')->where(['table'=>$type])->scalar()]);
+        return $this->andWhere(['type_id'=>$typeId]);
     }
 
     public function bySlug($slug)

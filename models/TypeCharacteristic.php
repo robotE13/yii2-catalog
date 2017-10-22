@@ -16,6 +16,7 @@ use robote13\catalog\forms\EnumerableItem;
  * @property int $type_id
  * @property \robote13\catalog\forms\EnumerableItem[] $items enumerable items for the attribute if data_type is self::TYPE_ENUMERABLE
  *
+ * @property-read string $validator Description
  * @property ProductType $type
  */
 class TypeCharacteristic extends \yii\db\ActiveRecord
@@ -120,6 +121,23 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
                 return $field->dropDownList(\yii\helpers\ArrayHelper::map($this->items, 'key', 'value'));
             default:
                 return $field->textInput();
+        }
+    }
+
+    public function getValidator()
+    {
+        switch ($this->data_type)
+        {
+            case static::TYPE_STRING:
+            case static::TYPE_TEXT:
+                return 'string';
+            case static::TYPE_INT:
+            case static::TYPE_ENUMERABLE:
+                return 'integer';
+            case static::TYPE_DECIMAL:
+                return 'number';
+            default:
+                return false;
         }
     }
 }

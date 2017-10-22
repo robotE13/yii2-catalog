@@ -12,6 +12,7 @@ use Yii;
  * @property string $table
  *
  * @property-read string $kind Description
+ * @property-read string $dynamicTableName
  * @property Product[] $catalogProducts
  * @property TypeCharacteristic[] $typeCharacteristics
  */
@@ -77,5 +78,10 @@ class ProductType extends \yii\db\ActiveRecord
     public function getTypeCharacteristics()
     {
         return $this->hasMany(TypeCharacteristic::className(), ['type_id' => 'id']);
+    }
+
+    public function getDynamicTableName()
+    {
+        return "{{%p_{$this->table}}}";
     }
 }

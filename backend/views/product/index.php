@@ -29,9 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'vendor_code',
             'title',
             [
-                'attribute'=>'type_id',
+                'attribute'=>'productKind',
                 'value'=>function($model){return yii\helpers\ArrayHelper::getValue($model->type,'title');},
-                'filter'=> robote13\catalog\models\ProductType::dropdownItems('id','title')
+                'filter'=> robote13\catalog\models\ProductType::dropdownItems('table','title')
             ],
             'slug',
             [
