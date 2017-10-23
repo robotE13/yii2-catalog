@@ -20,7 +20,7 @@ use yii\helpers\Html;
             return '<section>'
                 . Html::tag('h2', $model->title)
                 . $model->description
-                . Html::a(Yii::t('robote13/catalog','Details'),['product/view','kind'=>$model->type->kind,'id'=>$model->slug])
+                . Html::a(Yii::t('robote13/catalog','Details'),['product/view','productKind'=>$model->type->kind,'id'=>$model->slug])
                 . '<section>';
             }
     ])?>
