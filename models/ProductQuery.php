@@ -23,6 +23,12 @@ class ProductQuery extends \yii\db\ActiveQuery
         return $this->andWhere(['type_id'=>$typeId]);
     }
 
+    public function joinDynamicAttributes($typeId, $eagerLoading = true, $joinType = 'LEFT JOIN')
+    {
+        DynamicAttributes::$table = ProductType::find()->where(['id'=>$typeId])->one()->dynamicTableName;
+        parent::joinWith('dynamicAttributes', $eagerLoading, $joinType);
+    }
+
     public function bySlug($slug)
     {
         return $this->andWhere(['slug_index'=> md5($slug)]);

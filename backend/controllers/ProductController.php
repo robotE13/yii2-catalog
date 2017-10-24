@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;
 use robote13\catalog\models\DynamicAttributes;
+use robote13\catalog\models\ProductType;
 use robote13\yii2components\web\CrudControllerAbstract;
 
 /**
@@ -46,16 +47,19 @@ class ProductController extends CrudControllerAbstract
 
     public function actionCreate()
     {
-        $model = Yii::createObject(['class'=>$this->modelClass,'type_id'=> \robote13\catalog\models\ProductType::find()->select('id')->scalar()]);
+        $typeId = Yii::$app->request->get('type_id');
+        $productType = ProductType::findOne($typeId);
+        $model = Yii::createObject(['class'=>$this->modelClass,'type_id'=> $productType->id]);
         $attributes = Yii::createObject(DynamicAttributes::className());
 
-        $modelLoaded = $model->load(Yii::$app->request->post());
-        DynamicAttributes::$table = $model->dynamicTableName;
-        if ($modelLoaded && $attributes->load(Yii::$app->request->post())
-             && Model::validateMultiple([$model,$attributes]))
+        DynamicAttributes::$table = $productType->dynamicTableName;
+        $dynamicLoaded = $attributes->load(Yii::$app->request->post());
+        if ($model->load(Yii::$app->request->post()) && Model::validateMultiple([$model,$attributes]))
         {
             $model->save(false);
-            $attributes->link('product',$model);
+            if($dynamicLoaded){
+                $attributes->link('product',$model);
+            }
             return $this->redirect(['index']);
         }
         return $this->render('create',compact('model','attributes'));

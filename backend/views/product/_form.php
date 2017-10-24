@@ -64,8 +64,6 @@ $cropAspectRatio = $module->getCropDimension('width')/$module->getCropDimension(
 
         <div class="col-md-6">
             <div class="row">
-                <?= $form->field($model, 'type_id',['options'=>['class'=>'form-group col-md-6']])
-                         ->dropDownList(ProductType::dropdownItems('id','title')) ?>
                 <?= $form->field($model, 'status',['options'=>['class'=>'form-group col-md-6']])->dropDownList($model->getStatuses()) ?>
                 <?= $form->field($model, 'vendor_code',['options'=>['class'=>'form-group col-sm-6']])->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'origin_country',['options'=>['class'=>'form-group col-sm-6']])->textInput(['maxlength' => true]) ?>

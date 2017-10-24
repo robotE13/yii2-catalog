@@ -124,6 +124,10 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
         }
     }
 
+    /**
+     *
+     * @return string validator name or 'unknown'
+     */
     public function getValidator()
     {
         switch ($this->data_type)
@@ -137,7 +141,7 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
             case static::TYPE_DECIMAL:
                 return 'number';
             default:
-                return false;
+                return 'unknown';
         }
     }
 }

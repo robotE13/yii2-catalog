@@ -1,9 +1,11 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use robote13\catalog\models\ProductType;
 use yii\grid\GridView;
 use kartik\editable\Editable;
-use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel robote13\catalog\forms\ProductSearch */
@@ -17,9 +19,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a(Yii::t('robote13/catalog', 'Create Product'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <div class="dropdown">
+        <?= Html::a(Yii::t('robote13/catalog', 'Create Product'),'#', ['class' => 'btn btn-success dropdown-toggle','data'=>['toggle'=>'dropdown']]) ?>
+        <?= yii\bootstrap\Dropdown::widget([
+            'items' => ArrayHelper::map(ProductType::find()->asArray()->all(),'id',function($type){
+                return ['label'=>$type['title'],'url'=>['create','type_id'=>$type['id']]];
+            })
+        ])?>
+    </div>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

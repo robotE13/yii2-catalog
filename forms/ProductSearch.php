@@ -3,6 +3,7 @@
 namespace robote13\catalog\forms;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use robote13\catalog\models\Product;
 use robote13\catalog\models\ProductType;
@@ -11,11 +12,20 @@ use robote13\catalog\models\TypeCharacteristic;
 /**
  * ProductSearch represents the model behind the search form of `robote13\catalog\models\Product`.
  *
+ * @property integer $id
+ * @property string $title
+ * @property string $slug friendly URL
+ * @property integer $status
  * @property string $productKind
  */
 class ProductSearch extends \yii\base\DynamicModel
 {
+    /**
+     * @var array {@see \yii\data\Sort::$defaultOrder}
+     */
     public $defaultOrder;
+
+    private $dynamicRules = [];
 
     private $_kind;
 
@@ -82,6 +92,8 @@ class ProductSearch extends \yii\base\DynamicModel
             ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'vendor_code', $this->vendor_code]);
 
+        $this->addDynamicConditions($query);
+
         return $dataProvider;
     }
 
@@ -107,20 +119,41 @@ class ProductSearch extends \yii\base\DynamicModel
 
     private function addDynamicAttributes()
     {
-        if(!isset($this->type_id))
+        if(!isset($this->type_id)){
             return false;
+        }
 
-        $rules = [];
         $attributes = TypeCharacteristic::find()->where(['type_id'=> $this->type_id])->all();
         foreach ($attributes as $attribute)
         {
             $this->defineAttribute($attribute->attribute);
-            $rules[$attribute->validator][]=$attribute->attribute;
+            $this->dynamicRules[$attribute->validator][]=$attribute->attribute;
         }
-        foreach ($rules as $rule => $attrNames)
+
+        ArrayHelper::remove($rules,'unknown');
+
+        foreach ($this->dynamicRules as $rule => $attrNames)
         {
             $this->addRule($attrNames, $rule);
         }
     }
 
+    /**
+     *
+     * @param \robote13\catalog\models\ProductQuery $query Description
+     */
+    private function addDynamicConditions(&$query)
+    {
+        if(!isset($this->type_id)){
+            return false;
+        }
+
+        $conditions = [];
+        $query->joinDynamicAttributes($this->type_id);
+        foreach (ArrayHelper::getValue($this->dynamicRules,'integer',[]) as $attrName)
+        {
+            $conditions[$attrName]= $this->{$attrName};
+        }
+        $query->andFilterWhere($conditions);
+    }
 }
