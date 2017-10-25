@@ -70,20 +70,30 @@ class ProductController extends CrudControllerAbstract
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param mixed $id
      * @return mixed
-     *
+     */
     public function actionUpdate()
     {
         $id = Yii::$app->getRequest()->get('id');
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(Url::previous("{$this->id}-index"));
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $models = ['model'=>$model];
+        $attributes = $model->dynamicAttributes;
+        if(isset($attributes))
+        {
+            $attributes->load(Yii::$app->request->post());
+            $models['attributes']=$attributes;
         }
-    }*/
+
+        if ($model->load(Yii::$app->request->post()) && Model::validateMultiple($models))
+        {
+            foreach ($models as $item)
+            {
+                $item->save(false);
+            }
+            return $this->redirect(Url::previous("{$this->id}-index"));
+        }
+
+        return $this->render('update', $models);
+    }
 
     /**
      * Displays a single Product model.
