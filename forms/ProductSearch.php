@@ -144,7 +144,7 @@ class ProductSearch extends \yii\base\DynamicModel
      */
     private function addDynamicConditions(&$query)
     {
-        if(!isset($this->type_id)){
+        if(!isset($this->type_id) || empty($this->dynamicRules)){
             return false;
         }
 
