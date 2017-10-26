@@ -1,18 +1,20 @@
-Dynamic model for product search
----------
+0.3.2
+-----
+
+Dynamic attributes for the ProductSearch model has been added.
 
 Removed:
 ```
 robote13\catalog\models\ProductQuery::typeAlias()
-robote13\catalog\forms\ProductSearch::kind -> productKind
+robote13\catalog\backend\controllers\MainController
 ```
 
-754a3954ac39874d1b6b00cae089b482f0b0c670
-----------------------------------------
-
-default route = 'product'
-renamed frontend/controllers/MainController -> frontend/controllers/ProductController
-removed backend/controllers/MainController
+Rename/move:
+```
+robote13\catalog\Module::$defaultRoute 'main' -> 'product'
+robote13\catalog\frontend\controllers\MainController -> ProductController
+robote13\catalog\forms\ProductSearch::$kind -> $productKind
+```
 
 0.3.0
 -----
