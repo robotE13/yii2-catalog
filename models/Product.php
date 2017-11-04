@@ -23,6 +23,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $status
  * @property integer $popularity
  * @property string $updated_in
+ * @property-read DynamicAttributes|null $dynamicAttributes Characteristics depending on the type of product
  *
  * @property string $textStatus
  * @property-read boolean $isAvailable
@@ -120,10 +121,11 @@ class Product extends ProductBase
 
     public function getDynamicAttributes()
     {
-        if(!$this->isNewRecord){
+        if(!$this->isNewRecord && $this->db->getTableSchema($this->type->dynamicTableName) !== null){
             DynamicAttributes::$table = $this->type->dynamicTableName;
+            return $this->hasOne(DynamicAttributes::className(),['product_id'=>'id'])->inverseOf('product');
         }
-        return $this->hasOne(DynamicAttributes::className(),['product_id'=>'id'])->inverseOf('product');
+        return null;
     }
 
     /**
