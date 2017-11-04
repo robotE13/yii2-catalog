@@ -121,6 +121,10 @@ class Product extends ProductBase
 
     public function getDynamicAttributes()
     {
+        if(isset(DynamicAttributes::$table))
+        {
+            return $this->hasOne(DynamicAttributes::className(),['product_id'=>'id'])->inverseOf('product');
+        }
         if(!$this->isNewRecord && $this->db->getTableSchema($this->type->dynamicTableName) !== null){
             DynamicAttributes::$table = $this->type->dynamicTableName;
             return $this->hasOne(DynamicAttributes::className(),['product_id'=>'id'])->inverseOf('product');
