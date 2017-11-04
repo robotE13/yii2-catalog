@@ -95,6 +95,8 @@ $cropAspectRatio = $module->getCropDimension('width')/$module->getCropDimension(
         ]);?>
     <?php endif;?>
 
+    <?= $form->field($model, 'short_description')->textInput();?>
+
     <?= $form->field($model, 'description')->textarea(['rows' => 6])->widget(Redactor::className(),['settings'=>$redactorSettings]);?>
 
         <?php foreach ($model->characteristics as $characteristic) :

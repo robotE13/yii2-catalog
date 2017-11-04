@@ -1,6 +1,8 @@
 <?php
 
 return[
+    '{attribute} is invalid. Only lowercase characters, numbers, and hyphens are allowed.' =>
+        'Значение для {attribute} неверно. Разрешены только строчные латинские символы, цифры и дефис.',
     'Archive' => 'Нет в продаже',
     'Add to cart' => 'Добавить в корзину',
     'By price' => 'По цене',
@@ -33,6 +35,7 @@ return[
     'Slug' => 'Псевдоним для ЧПУ',
     'Sets' => 'Наборы',
     'Set details' => 'Подробнее о комплекте',
+    'Short description' => 'Краткое описание',
     'Status' => 'Статус',
     'Type ID' => 'Тип товара',
     'Title' => 'Название',

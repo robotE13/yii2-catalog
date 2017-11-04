@@ -14,6 +14,7 @@ use yii\helpers\ArrayHelper;
  * @property string $slug_index
  * @property string $title product name
  * @property string $badge badge for product card
+ * @property string $short_description Short description. For example, for use in the list of products.
  * @property string $description product description
  * @property string $vendor_code
  * @property int $measurement_unit_id
@@ -59,7 +60,8 @@ class Product extends ProductBase
             [['type_id', 'measurement_unit_id','popularity'], 'integer'],
             [['description','badge'], 'string'],
             [['price'], 'number'],
-            [['slug', 'title','vendor_code'], 'string', 'max' => 255],
+            [['slug', 'title','vendor_code','short_description'], 'string', 'max' => 255],
+            ['slug','match','pattern'=>'/^[a-z\d][a-z\d\-]*$/','message'=> Yii::t('robote13/catalog',"{attribute} is invalid. Only lowercase characters, numbers, and hyphens are allowed.")],
             ['vendor_code','unique','skipOnError'=>true],
             ['status','in','range'=> array_keys(static::getStatuses())],
             [['measurement_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => MeasurementUnit::className(), 'targetAttribute' => ['measurement_unit_id' => 'id']],
@@ -89,6 +91,7 @@ class Product extends ProductBase
             'slug' => Yii::t('robote13/catalog', 'Slug'),
             'title' => Yii::t('robote13/catalog', 'Title'),
             'vendor_code' => Yii::t('robote13/catalog', 'Vendor Code'),
+            'short_description' => Yii::t('robote13/catalog', 'Short description'),
             'description' => Yii::t('robote13/catalog', 'Description'),
             'measurement_unit_id' => Yii::t('robote13/catalog', 'Measurement units'),
             'origin_country' => Yii::t('robote13/catalog', 'Origin'),
