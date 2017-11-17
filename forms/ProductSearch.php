@@ -17,6 +17,8 @@ use robote13\catalog\models\TypeCharacteristic;
  * @property string $slug friendly URL
  * @property integer $status
  * @property string $productKind
+ * @property string $priceRange comma separated min and max values
+ * @property-read integer $typeId {@see Product::$type_id}
  */
 class ProductSearch extends \yii\base\DynamicModel
 {
@@ -29,14 +31,18 @@ class ProductSearch extends \yii\base\DynamicModel
 
     private $_kind;
 
-    private $type_id;
+    private $_type_id;
+
+    private $_min_price=0;
+
+    private $_max_price;
 
     public function __construct(array $attributes = array(), $config = array())
     {
-        parent::__construct(array_fill_keys(['id', 'status','slug', 'title', 'vendor_code','price'],null), $config);
+        parent::__construct(array_fill_keys(['id', 'status','slug', 'title', 'vendor_code'],null), $config);
         $this->addRule(['id', 'status'],'integer')
                 ->addRule(['slug', 'title', 'productKind', 'vendor_code'], 'string')
-                ->addRule(['price'], 'number');
+                ->addRule(['priceRange'], 'match',['pattern'=>'/^[\d]+\,[\d]+$/']);
 
         $this->addDynamicAttributes();
     }
@@ -83,14 +89,15 @@ class ProductSearch extends \yii\base\DynamicModel
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'type_id' => $this->type_id,
-            'price' => $this->price,
+            'type_id' => $this->_type_id,
             'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'vendor_code', $this->vendor_code]);
+            ->andFilterWhere(['like', 'vendor_code', $this->vendor_code])
+            ->andFilterWhere(['>=', 'price', $this->_min_price])
+            ->andFilterWhere(['<=', 'price', $this->_max_price]);
 
         $this->addDynamicConditions($query);
 
@@ -102,6 +109,19 @@ class ProductSearch extends \yii\base\DynamicModel
         return '';
     }
 
+    public function setPriceRange($priceRange)
+    {
+        $ranges = explode(',', $priceRange);
+        $this->_min_price = ArrayHelper::getValue($ranges, 0);
+        $this->_max_price = ArrayHelper::getValue($ranges, 1);
+    }
+
+
+    public function getPriceRange()
+    {
+        return implode(',', [$this->_min_price, isset($this->_max_price)?$this->_max_price:PHP_INT_MAX]);
+    }
+
     public function getProductKind()
     {
         return $this->_kind;
@@ -109,21 +129,26 @@ class ProductSearch extends \yii\base\DynamicModel
 
     public function setProductKind($kind)
     {
-        $this->type_id = ProductType::find()->select('id')->where(['table'=> str_replace('-','_',$kind)])->scalar();
-        if(!$this->type_id)
+        $this->_type_id = ProductType::find()->select('id')->where(['table'=> str_replace('-','_',$kind)])->scalar();
+        if(!$this->_type_id)
         {
-            $this->type_id = null;
+            $this->_type_id = null;
         }
         $this->_kind = $kind;
     }
 
+    public function getTypeId()
+    {
+        return $this->_type_id;
+    }
+
     private function addDynamicAttributes()
     {
-        if(!isset($this->type_id)){
+        if(!isset($this->_type_id)){
             return false;
         }
 
-        $attributes = TypeCharacteristic::find()->where(['type_id'=> $this->type_id])->all();
+        $attributes = TypeCharacteristic::find()->where(['type_id'=> $this->_type_id])->all();
         foreach ($attributes as $attribute)
         {
             $this->defineAttribute($attribute->attribute);
@@ -144,12 +169,12 @@ class ProductSearch extends \yii\base\DynamicModel
      */
     private function addDynamicConditions(&$query)
     {
-        if(!isset($this->type_id) || empty($this->dynamicRules)){
+        if(!isset($this->_type_id) || empty($this->dynamicRules)){
             return false;
         }
 
         $conditions = [];
-        $query->joinDynamicAttributes($this->type_id);
+        $query->joinDynamicAttributes($this->_type_id);
         foreach (ArrayHelper::getValue($this->dynamicRules,'integer',[]) as $attrName)
         {
             $conditions[$attrName]= $this->{$attrName};

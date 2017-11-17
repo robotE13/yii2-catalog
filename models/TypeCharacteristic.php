@@ -5,6 +5,7 @@ namespace robote13\catalog\models;
 use Yii;
 use yii\helpers\Json;
 use robote13\catalog\forms\EnumerableItem;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%type_characteristic}}".
@@ -105,22 +106,41 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
     /**
      *
      * @param \yii\widgets\ActiveForm $form
+     * @param \yii\base\Model $model
+     * @param string $attribute
+     * @param array $options the additional configurations for the field object. These are properties of [[ActiveField]]
+     * or a subclass, depending on the value of [[fieldClass]]
+     * @param array $inputOptions {@see \yii\widgets\ActiveField::$inputOptions}
      */
-    public function field($form,$model)
+    public static function fieldHelper($form,$model,$attribute,$options=[],$inputOptions = ['class' => 'form-control'])
     {
-        $field = $form->field($model, $this->attribute);
+        $characteristic = static::find()->where(['type_id'=>$model->typeId,'attribute'=>$attribute])->one();
+        return $characteristic->field($form,$model,$options,$inputOptions);
+    }
+
+    /**
+     *
+     * @param \yii\widgets\ActiveForm $form
+     * @param \yii\base\Model $model
+     * @param array $options the additional configurations for the field object. These are properties of [[ActiveField]]
+     * or a subclass, depending on the value of [[fieldClass]]
+     * @param array $inputOptions {@see \yii\widgets\ActiveField::$inputOptions}
+     */
+    public function field($form,$model,$options = [],$inputOptions = ['class' => 'form-control'])
+    {
+        $field = $form->field($model, $this->attribute,$options);
         switch ($this->data_type)
         {
             case static::TYPE_STRING:
             case static::TYPE_INT:
             case static::TYPE_DECIMAL:
-                return $field->textInput();
+                return $field->textInput($inputOptions);
             case static::TYPE_TEXT:
-                return $field->textarea();
+                return $field->textarea($inputOptions);
             case static::TYPE_ENUMERABLE:
-                return $field->dropDownList(\yii\helpers\ArrayHelper::map($this->items, 'key', 'value'));
+                return $field->dropDownList(ArrayHelper::map($this->items, 'key', 'value'),$inputOptions);
             default:
-                return $field->textInput();
+                return $field->textInput($inputOptions);
         }
     }
 
