@@ -33,7 +33,7 @@ class ProductSearch extends \yii\base\DynamicModel
 
     private $_type_id;
 
-    private $_min_price=0;
+    private $_min_price = 0;
 
     private $_max_price;
 
@@ -45,6 +45,16 @@ class ProductSearch extends \yii\base\DynamicModel
                 ->addRule(['priceRange'], 'match',['pattern'=>'/^[\d]+\,[\d]+$/']);
 
         $this->addDynamicAttributes();
+    }
+
+    /**
+     * Generates an attribute label based on the give attribute name.
+     * @param string $name
+     * @return string
+     */
+    public function generateAttributeLabel($name)
+    {
+        return Yii::t('app', parent::generateAttributeLabel($name));
     }
 
     /**
