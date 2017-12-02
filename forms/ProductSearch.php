@@ -22,6 +22,8 @@ use robote13\catalog\models\TypeCharacteristic;
  */
 class ProductSearch extends \yii\base\DynamicModel
 {
+    use \robote13\catalog\components\KrajeeSliderRange;
+
     /**
      * @var array {@see \yii\data\Sort::$defaultOrder}
      */
@@ -32,10 +34,6 @@ class ProductSearch extends \yii\base\DynamicModel
     private $_kind;
 
     private $_type_id;
-
-    private $_min_price = 0;
-
-    private $_max_price;
 
     public function __construct(array $attributes = array(), $config = array())
     {
@@ -117,19 +115,6 @@ class ProductSearch extends \yii\base\DynamicModel
     public function formName()
     {
         return '';
-    }
-
-    public function setPriceRange($priceRange)
-    {
-        $ranges = explode(',', $priceRange);
-        $this->_min_price = ArrayHelper::getValue($ranges, 0);
-        $this->_max_price = ArrayHelper::getValue($ranges, 1);
-    }
-
-
-    public function getPriceRange()
-    {
-        return implode(',', [$this->_min_price, isset($this->_max_price)?$this->_max_price:PHP_INT_MAX]);
     }
 
     public function getProductKind()
