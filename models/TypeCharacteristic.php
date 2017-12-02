@@ -73,6 +73,16 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
         return $this->hasOne(ProductType::className(), ['id' => 'type_id']);
     }
 
+    /**
+     *
+     * @param integer $value EnumerableItem key
+     * @return string
+     */
+    public function getEnumerableValue($value)
+    {
+        return ArrayHelper::getValue((array) $this->items, "{$value}.value",$value);
+    }
+
     public function afterFind()
     {
         parent::afterFind();

@@ -33,6 +33,7 @@ use yii\helpers\ArrayHelper;
  * @property Product[] $related "с этим товаром покупают"
  * @property Set[] $sets
  * @property SetProduct[] $setProducts
+ * @property TypeCharacteristic[] $characteristics
  * @property Warehouse[] $warehouses
  */
 class Product extends ProductBase
@@ -145,7 +146,17 @@ class Product extends ProductBase
      */
     public function getCharacteristics()
     {
-        return $this->hasMany(TypeCharacteristic::className(), ['type_id' => 'id'])->via('type');
+        return $this->hasMany(TypeCharacteristic::className(), ['type_id' => 'id'])->via('type')->indexBy('attribute');
+    }
+    
+    public function getCharacteristic($attribute)
+    {
+        $characteristic = ArrayHelper::getValue($this->characteristics, $attribute);
+        if(!isset($characteristic))
+        {
+            throw new \yii\base\InvalidParamException("Getting unknopwn dynamicAttribute property: {$attribute}");
+        }
+        return $characteristic->getEnumerableValue($this->dynamicAttributes->{$attribute});
     }
 
     /**
