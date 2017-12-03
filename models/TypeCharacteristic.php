@@ -91,10 +91,10 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
             $items = [];
             foreach (Json::decode($this->items) as $key => $item)
             {
-                array_push($items, new EnumerableItem([
+                $items[$key] = new EnumerableItem([
                     'key'=>$key,
                     'value'=>$item
-                ]));
+                ]);
             }
             $this->items = $items;
         }

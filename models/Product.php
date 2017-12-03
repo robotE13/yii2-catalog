@@ -148,7 +148,7 @@ class Product extends ProductBase
     {
         return $this->hasMany(TypeCharacteristic::className(), ['type_id' => 'id'])->via('type')->indexBy('attribute');
     }
-    
+
     public function getCharacteristic($attribute)
     {
         $characteristic = ArrayHelper::getValue($this->characteristics, $attribute);
