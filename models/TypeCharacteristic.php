@@ -133,11 +133,19 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
      * @param \yii\widgets\ActiveForm $form
      * @param \yii\base\Model $model
      * @param array $options the additional configurations for the field object. These are properties of [[ActiveField]]
-     * or a subclass, depending on the value of [[fieldClass]]
+     * or a subclass, depending on the value of [[fieldClass]].
+     * The following option are specially handled:
+     *
+     *  - enumFieldType: string (possible values: dropdown, checkbox, radio)
+     *
      * @param array $inputOptions {@see \yii\widgets\ActiveField::$inputOptions}
+     * The following option are specially handled:
+     *
+     *  - unselectOption
      */
     public function field($form,$model,$options = [],$inputOptions = ['class' => 'form-control'])
     {
+        $enumFieldType = ArrayHelper::remove($options,'enumFieldType');
         $field = $form->field($model, $this->attribute,$options);
         switch ($this->data_type)
         {
@@ -148,7 +156,21 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
             case static::TYPE_TEXT:
                 return $field->textarea($inputOptions);
             case static::TYPE_ENUMERABLE:
-                return $field->dropDownList(ArrayHelper::map($this->items, 'key', 'value'),$inputOptions);
+                $items = ArrayHelper::map($this->items, 'key', function($item){return Yii::t('app', $item->value);});
+                    switch ($enumFieldType) {
+                        case 'radio':
+                            $unselet = ArrayHelper::getValue($inputOptions,'unselectOption','');
+                            if($unselet !== '')
+                            {
+                                $items = array_merge([null=>$unselet],$items);
+                                $inputOptions['unselect'] = null;
+                            }
+                            return $field->radioList($items,$inputOptions);
+                        case 'checkbox':
+                            return $field->checkboxList($items,$inputOptions);
+                        default:
+                            return $field->dropDownList($items,$inputOptions);
+                    }
             default:
                 return $field->textInput($inputOptions);
         }
