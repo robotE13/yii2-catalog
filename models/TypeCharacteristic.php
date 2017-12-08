@@ -159,7 +159,7 @@ class TypeCharacteristic extends \yii\db\ActiveRecord
                 $items = ArrayHelper::map($this->items, 'key', function($item){return Yii::t('app', $item->value);});
                     switch ($enumFieldType) {
                         case 'radio':
-                            $unselet = ArrayHelper::getValue($inputOptions,'unselectOption','');
+                            $unselet = ArrayHelper::remove($inputOptions,'unselectOption','');
                             if($unselet !== '')
                             {
                                 $items = array_merge([null=>$unselet],$items);
