@@ -38,6 +38,7 @@ class Module extends \yii\base\Module
      */
     private $previewUploaderOptions = [
         'tempPath' => '@app/runtime/catalog-previews',
+        'url' => '@web/catalog-previews',
         'imageTransforms'=>[
             'cropped'=>[
                 'maxWidth'=>150,

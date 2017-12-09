@@ -32,6 +32,9 @@ class ProductController extends CrudControllerAbstract
             'update-editable'=>[
                 'class'=> \robote13\yii2components\web\EditableAction::className(),
                 'modelClass'=> \robote13\catalog\models\Product::className()
+            ],
+            'fileapi-upload' => [
+                'class' => \vova07\fileapi\actions\UploadAction::className(),
             ]
         ];
     }
