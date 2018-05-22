@@ -22,9 +22,9 @@
         "kartik-v/yii2-editable": "@stable",
         "kartik-v/yii2-widget-select2": "@dev",
         "robote13/countries-list":"*",
-        "robote13/yii2-components":"*",
+        "robote13/yii2-components":"^1.0.0",
         "sidanval/yii2-tabular":"dev-master",
-        "voskobovich/yii2-linker-behavior":"dev-master",
+        "voskobovich/yii2-linker-behavior":"^4.0.0",
         "vova07/yii2-fileapi-widget": "dev-feature-flysystem",
         "vova07/yii2-imperavi-widget" : "dev-master",
         "wbraganca/yii2-dynamicform": "dev-master"
