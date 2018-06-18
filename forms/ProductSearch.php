@@ -15,6 +15,9 @@ class ProductSearch extends Product
     public $defaultOrder;
 
     public $kind;
+
+    public $category;
+
     /**
      * @inheritdoc
      */
@@ -22,7 +25,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'type_id', 'measurement_unit_id', 'status'], 'integer'],
-            [['slug', 'title','kind', 'description','vendor_code'], 'string'],
+            [['slug', 'title','kind', 'description','vendor_code','category'], 'string'],
             [['price'], 'number'],
         ];
     }
@@ -84,6 +87,10 @@ class ProductSearch extends Product
             ->andFilterWhere(['like', 'vendor_code', $this->vendor_code])
             ->andFilterWhere(['like', 'description', $this->description]);
 
+        if(!empty($this->category))
+        {
+            $query->withCategories($this->category,'INNER JOIN');
+        }
         $this->andFilterKind($query);
 
         return $dataProvider;

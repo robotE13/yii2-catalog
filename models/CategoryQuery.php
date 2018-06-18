@@ -16,10 +16,11 @@ class CategoryQuery extends \yii\db\ActiveQuery
             'nestedSetsQuery' => NestedSetsQueryBehavior::className(),
         ];
     }
-    /*public function active()
+
+    public function bySlug($slug)
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this->andWhere(['slug_index'=> md5($slug)]);
+    }
 
     /**
      * @inheritdoc

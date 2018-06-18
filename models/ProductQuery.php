@@ -30,6 +30,13 @@ class ProductQuery extends \yii\db\ActiveQuery
         return $this->andWhere(['type_id'=>ProductType::find()->select('id')->where(['table'=>$type])->scalar()]);
     }
 
+    public function withCategories($category,$joinType = 'LEFT JOIN')
+    {
+        return !empty($category) ? $this->joinWith(['categories'=>function($query) use($category){
+            return $query->alias('category')->andOnCondition(['category.slug'=> $category]);
+        }],true, $joinType) : $this;
+    }
+
     public function bySlug($slug)
     {
         return $this->andWhere(['slug_index'=> md5($slug)]);
