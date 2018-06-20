@@ -18,7 +18,11 @@ class WithCategory extends \robote13\yii2components\web\Modifier
     public function modify(\yii\base\Model $searchModel, \yii\data\ActiveDataProvider $dataProvider)
     {
         $slug = \Yii::$app->request->get('category');
-        $category = $slug !== null ? \robote13\catalog\models\Category::find()->bySlug($slug)->one() : null;
+        $category = \robote13\catalog\models\Category::find()->bySlug($slug)->one();
+        if(empty($category))
+        {
+            throw new \yii\web\NotFoundHttpException('Page not found');
+        }
         return compact('searchModel','dataProvider','category');
     }
 }
